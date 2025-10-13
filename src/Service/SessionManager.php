@@ -25,7 +25,8 @@ class SessionManager
     public function createSession(): string
     {
         $token = bin2hex(random_bytes(32));
-        $this->sessionRepository->create($token);
+        $session = $this->sessionRepository->create($token);
+        assert($token == $session->getSessionToken());
         return $token;
     }
 
@@ -49,15 +50,5 @@ class SessionManager
     public function getSession(string $token): ?GameSession
     {
         throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-    }
-
-    /**
-     * Generate unique session token
-     * SRP: Isolated token generation
-     */
-    private function generateToken(): string
-    {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // Use bin2hex(random_bytes(32))
     }
 }

@@ -24,22 +24,22 @@ class GameSession
 
     public function getId(): ?int
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->id;
     }
 
     public function getSessionToken(): string
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->sessionToken;
     }
 
     public function getTotalQuestions(): int
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->totalQuestions;
     }
 
     public function getCorrectAnswers(): int
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->correctAnswers;
     }
 
     /**
@@ -48,8 +48,17 @@ class GameSession
      */
     public function recordAnswer(bool $wasCorrect): void
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // - increment totals
+        /*
+         * Unlike Java where objects live in shared memory
+         * across threads, each PHP request gets its own
+         * isolated process/memory space. A GameSession
+         * object only exists for the duration of one HTTP
+         * request.
+         */
+        if ($wasCorrect) {
+            $this->correctAnswers++;
+        }
+        $this->totalQuestions++;
     }
 
     /**
@@ -58,17 +67,19 @@ class GameSession
      */
     public function getAccuracy(): float
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // - return 0.0 if no questions answered
+        if ($this->totalQuestions == 0) {
+            return 0.0;
+        }
+        return $this->correctAnswers / $this->totalQuestions;
     }
 
     public function getStartedAt(): \DateTimeInterface
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->startedAt;
     }
 
     public function getLastActivity(): \DateTimeInterface
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->lastActivity;
     }
 }
