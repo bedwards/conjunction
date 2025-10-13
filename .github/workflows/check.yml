@@ -1,11 +1,35 @@
 name: check
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Run check script
-      run: ./check.sh --group work
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup PHP with required version and extensions
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4' # Matches composer.json requirement
+          extensions: pdo_mysql, zip, opcache # Common PHP extensions
+          tools: composer:v2
+
+      # Cache Composer dependencies for faster builds
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        # Use install for consistency and speed in CI
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run all checks
+        # Execute the main check script now that dependencies are installed
+        run: ./check.sh --group work
