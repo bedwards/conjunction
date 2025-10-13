@@ -3,7 +3,7 @@
     "description": "Educational game teaching conjunctions",
     "type": "project",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.4",
         "php-di/php-di": "^7.0",
         "doctrine/orm": "^2.15",
         "doctrine/dbal": "^3.6",
