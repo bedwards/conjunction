@@ -36,11 +36,12 @@ jobs:
       - name: Run all checks
         run: ./check-github-workflow.sh
 
-      - name: Publish PHPUnit Test Report
-        uses: pet-bat/action-php-unit-summary@v1
+      - name: Upload Test Summary Artifact
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          path: reports/junit.xml
+          name: phpunit-test-summary
+          path: reports/testdox.txt
 
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v4
