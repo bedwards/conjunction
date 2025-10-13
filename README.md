@@ -1,5 +1,7 @@
 # 🚂 Conjunction Junction
 
+![Build Status](https://github.com/bedwards/conjunction/actions/workflows/check.yml/badge.svg?branch=main)
+
 [![codecov](https://codecov.io/gh/bedwards/conjunction/branch/main/graph/badge.svg)](https://codecov.io/gh/bedwards/conjunction)
 
 > *"And, But, So - what's your function?"*
