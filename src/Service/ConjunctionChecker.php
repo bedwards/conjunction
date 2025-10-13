@@ -15,7 +15,7 @@ use Conjunction\Strategy\RuleInterface;
  * - DIP: Depends on interfaces (FeedbackGenerator, SessionManager, Rules)
  * - OCP: Can add new rules without modifying this class
  */
-class ConjunctionChecker
+final class ConjunctionChecker
 {
     /**
      * @param RuleInterface[] $rules

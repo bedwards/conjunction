@@ -36,13 +36,11 @@ jobs:
       - name: Run all checks
         run: ./check-github-workflow.sh
 
-      - name: Publish Test Report
-        uses: dorny/test-reporter@v1
+      - name: Publish PHPUnit Test Report
+        uses: pet-bat/phpunit-action@v1
         if: always()
         with:
-          name: PHPUnit Tests
           path: reports/junit.xml
-          reporter: jest-junit
 
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v4
