@@ -13,21 +13,21 @@ use Conjunction\Entity\Conjunction;
  */
 class AndRule implements ConjunctionRuleInterface
 {
+    /**
+     * Return true if pair's correct answer is AND and choice is AND
+     */
     public function applies(SentencePair $pair, Conjunction $choice): bool
     {
-        // TODO: Implement
-        // Return true if choice is AND and pair's correct answer is AND
+        return $pair->getCorrectAnswer() == $choice;
     }
 
     public function getExplanation(): string
     {
-        // TODO: Implement
-        // Return child-friendly explanation of "and"
-        // Example: "And is for adding things together or showing what happened next!"
+        return "And is for adding things together or showing what happened next!";
     }
 
     public function getConjunctionType(): Conjunction
     {
-        // TODO: Implement
+        return Conjunction::AND;
     }
 }
