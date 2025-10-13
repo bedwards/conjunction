@@ -30,6 +30,9 @@ class SentencePairTest extends TestCase
         $this->assertTrue($result, 'Should return true for correct conjunction');
     }
 
+    /**
+     * @group work
+     */
     public function testIsCorrectChoiceReturnsFalse(): void
     {
         $result = $this->pair->isCorrectChoice(Conjunction::AND);

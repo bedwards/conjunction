@@ -78,7 +78,7 @@ class SentencePair
      */
     public function isCorrectChoice(Conjunction $choice): bool
     {
-        return true;
+        return $choice == $this->correctAnswer;
     }
 
     /**
