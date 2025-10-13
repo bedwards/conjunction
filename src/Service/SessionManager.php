@@ -24,7 +24,7 @@ class SessionManager
      */
     public function createSession(): string
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Generate unique token, create session, return token
     }
 
@@ -38,7 +38,7 @@ class SessionManager
         bool $wasCorrect,
         int $responseTimeMs
     ): void {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Find session, update stats, record answer
     }
 
@@ -47,7 +47,7 @@ class SessionManager
      */
     public function getSession(string $token): ?GameSession
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     /**
@@ -56,7 +56,7 @@ class SessionManager
      */
     private function generateToken(): string
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Use bin2hex(random_bytes(32))
     }
 }

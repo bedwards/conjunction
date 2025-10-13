@@ -18,9 +18,10 @@ class DatabasePairFactory implements SentencePairFactoryInterface
     ) {
     }
 
+    #[\Override]
     public function getRandomPair(int $difficulty): ?SentencePair
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Delegate to repository
     }
 }

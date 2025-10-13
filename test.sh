@@ -1,9 +1,6 @@
 #!/bin/bash
 
-echo "🧪 Running PHPUnit tests..."
-echo ""
+set -eux
 
+# --group work
 ./vendor/bin/phpunit --colors=always --testdox "$@"
-
-echo ""
-echo "Tests complete!"

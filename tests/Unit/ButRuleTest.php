@@ -2,48 +2,44 @@
 
 namespace Conjunction\Tests\Unit;
 
-use Conjunction\Strategy\ButRule;
+use Conjunction\Strategy\Rule;
 use Conjunction\Entity\SentencePair;
 use Conjunction\Entity\Conjunction;
 use PHPUnit\Framework\TestCase;
 
 class ButRuleTest extends TestCase
 {
-    private ButRule $rule;
+    private Rule $rule;
 
+    #[\Override]
     protected function setUp(): void
     {
-        $this->rule = new ButRule();
+        $this->rule = new Rule(Conjunction::BUT);
     }
 
+    /**
+     * @group work
+     */
     public function testAppliesReturnsTrueWhenCorrect(): void
     {
-        $pair = new SentencePair(
-            'I like pizza',
-            'I don\'t like olives',
-            Conjunction::BUT,
-            1
-        );
-
-        $result = $this->rule->applies($pair, Conjunction::BUT);
+        $result = $this->rule->applies(Conjunction::BUT);
 
         $this->assertTrue($result);
     }
 
+    /**
+     * @group work
+     */
     public function testAppliesReturnsFalseWhenIncorrect(): void
     {
-        $pair = new SentencePair(
-            'I was tired',
-            'I went to bed',
-            Conjunction::SO,
-            1
-        );
-
-        $result = $this->rule->applies($pair, Conjunction::BUT);
+        $result = $this->rule->applies(Conjunction::SO);
 
         $this->assertFalse($result);
     }
 
+    /**
+     * @group work
+     */
     public function testGetExplanationReturnsString(): void
     {
         $explanation = $this->rule->getExplanation();
@@ -53,8 +49,11 @@ class ButRuleTest extends TestCase
         $this->assertStringContainsString('but', strtolower($explanation));
     }
 
-    public function testGetConjunctionTypeReturnsBut(): void
+    /**
+     * @group work
+     */
+    public function testGetConjunctionReturnsBut(): void
     {
-        $this->assertEquals(Conjunction::BUT, $this->rule->getConjunctionType());
+        $this->assertEquals(Conjunction::BUT, $this->rule->getConjunction());
     }
 }

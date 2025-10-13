@@ -10,11 +10,11 @@ use Conjunction\Factory\DatabasePairFactory;
 use Conjunction\Service\FeedbackGenerator;
 use Conjunction\Service\SessionManager;
 use Conjunction\Service\ConjunctionChecker;
-use Conjunction\Strategy\AndRule;
-use Conjunction\Strategy\ButRule;
-use Conjunction\Strategy\SoRule;
+use Conjunction\Strategy\Rule;
 use Doctrine\ORM\EntityManager;
 use Dotenv\Dotenv;
+
+use function DI\get;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
@@ -63,24 +63,23 @@ $containerBuilder->addDefinitions([
     FeedbackGenerator::class => function () {
         return new FeedbackGenerator(
             $_ENV['OLLAMA_HOST'] ?? 'http://localhost:11434',
-            $_ENV['OLLAMA_MODEL'] ?? 'llama3.2:3b'
+            $_ENV['OLLAMA_MODEL'] ?? 'llama3.3:70b'
         );
     },
 
     SessionManager::class => DI\autowire(SessionManager::class),
 
     // ConjunctionChecker with strategy pattern rules
-    ConjunctionChecker::class => function ($c) {
-        return new ConjunctionChecker(
-            $c->get(FeedbackGenerator::class),
-            $c->get(SessionManager::class),
-            [
-                new AndRule(),
-                new ButRule(),
-                new SoRule()
-            ]
-        );
-    },
+    'rule.and' => fn () => new Rule(Conjunction::AND),
+    'rule.but' => fn () => new Rule(Conjunction::BUT),
+    'rule.so' => fn () => new Rule(Conjunction::SO),
+
+    ConjunctionChecker::class => DI\autowire()
+        ->constructorParameter('rules', [
+            DI\get('rule.and'),
+            DI\get('rule.but'),
+            DI\get('rule.so'),
+        ]),
 ]);
 
 return $containerBuilder->build();

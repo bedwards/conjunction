@@ -25,12 +25,12 @@ class Verdict
 
     public function getType(): VerdictType
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     public function getExplanation(): string
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     /**
@@ -38,7 +38,7 @@ class Verdict
      */
     public function isCorrect(): bool
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     /**
@@ -47,7 +47,7 @@ class Verdict
      */
     public function getColorClass(): string
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // 'verdict-correct' => green
         // 'verdict-wrong' => red
         // 'verdict-okay' => yellow
@@ -58,6 +58,6 @@ class Verdict
      */
     public function toArray(): array
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 }

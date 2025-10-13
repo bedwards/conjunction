@@ -29,7 +29,7 @@ class FeedbackGenerator
         Conjunction $userChoice,
         bool $isCorrect
     ): Verdict {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // 1. Build prompt using buildPrompt()
         // 2. Send to Ollama API
         // 3. Parse response using parseOllamaResponse()
@@ -45,7 +45,7 @@ class FeedbackGenerator
         Conjunction $userChoice,
         bool $isCorrect
     ): string {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Return formatted prompt with context and instructions
     }
 
@@ -55,7 +55,7 @@ class FeedbackGenerator
      */
     private function parseOllamaResponse(string $jsonResponse): Verdict
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // Parse JSON and return Verdict object
         // Handle errors gracefully
     }

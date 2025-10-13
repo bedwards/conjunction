@@ -12,12 +12,12 @@ use Conjunction\Entity\Conjunction;
  * - LSP: All implementations are substitutable
  * - ISP: Small, focused interface
  */
-interface ConjunctionRuleInterface
+interface RuleInterface
 {
     /**
-     * Check if this rule applies to the given pair and choice
+     * Does choice match this rule's conjuction?
      */
-    public function applies(SentencePair $pair, Conjunction $choice): bool;
+    public function applies(Conjunction $choice): bool;
 
     /**
      * Get explanation for this conjunction type
@@ -25,7 +25,7 @@ interface ConjunctionRuleInterface
     public function getExplanation(): string;
 
     /**
-     * Get the conjunction type this rule handles
+     * Get the conjunction associated with this rule.
      */
-    public function getConjunctionType(): Conjunction;
+    public function getConjunction(): Conjunction;
 }

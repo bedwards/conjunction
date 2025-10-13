@@ -10,6 +10,8 @@ use PDO;
  * SOLID Principles:
  * - SRP: Only responsible for session data access
  * - DIP: Implements interface, could swap for Redis/Memcached later
+ *
+ * @extends EntityRepository<GameSession>
  */
 class GameSessionRepository implements GameSessionRepositoryInterface
 {
@@ -18,24 +20,28 @@ class GameSessionRepository implements GameSessionRepositoryInterface
     ) {
     }
 
+    #[\Override]
     public function create(string $sessionToken): GameSession
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // INSERT INTO game_sessions and return new GameSession object
     }
 
+    #[\Override]
     public function findByToken(string $token): ?GameSession
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // SELECT and hydrate GameSession object
     }
 
+    #[\Override]
     public function update(GameSession $session): void
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // UPDATE game_sessions SET total_questions, correct_answers, last_activity
     }
 
+    #[\Override]
     public function recordAnswer(
         int $sessionId,
         int $pairId,
@@ -43,7 +49,7 @@ class GameSessionRepository implements GameSessionRepositoryInterface
         bool $wasCorrect,
         int $responseTimeMs
     ): void {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // INSERT INTO session_answers
     }
 }

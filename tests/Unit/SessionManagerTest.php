@@ -13,6 +13,7 @@ class SessionManagerTest extends TestCase
     private SessionManager $sessionManager;
     private GameSessionRepositoryInterface|MockObject $mockRepository;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockRepository = $this->createMock(GameSessionRepositoryInterface::class);

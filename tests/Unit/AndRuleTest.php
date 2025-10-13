@@ -2,18 +2,19 @@
 
 namespace Conjunction\Tests\Unit;
 
-use Conjunction\Strategy\AndRule;
+use Conjunction\Strategy\Rule;
 use Conjunction\Entity\SentencePair;
 use Conjunction\Entity\Conjunction;
 use PHPUnit\Framework\TestCase;
 
 class AndRuleTest extends TestCase
 {
-    private AndRule $rule;
+    private Rule $rule;
 
+    #[\Override]
     protected function setUp(): void
     {
-        $this->rule = new AndRule();
+        $this->rule = new Rule(Conjunction::AND);
     }
 
     /**
@@ -21,14 +22,7 @@ class AndRuleTest extends TestCase
      */
     public function testAppliesReturnsTrueWhenCorrect(): void
     {
-        $pair = new SentencePair(
-            'I had a sandwich',
-            'I had chips',
-            Conjunction::AND,
-            1
-        );
-
-        $result = $this->rule->applies($pair, Conjunction::AND);
+        $result = $this->rule->applies(Conjunction::AND);
 
         $this->assertTrue($result, 'Should return true when choice matches correct answer');
     }
@@ -38,14 +32,7 @@ class AndRuleTest extends TestCase
      */
     public function testAppliesReturnsFalseWhenIncorrect(): void
     {
-        $pair = new SentencePair(
-            'I was tired',
-            'I went to bed',
-            Conjunction::SO,
-            1
-        );
-
-        $result = $this->rule->applies($pair, Conjunction::AND);
+        $result = $this->rule->applies(Conjunction::SO);
 
         $this->assertFalse($result, 'Should return false when choice does not match');
     }
@@ -65,8 +52,8 @@ class AndRuleTest extends TestCase
     /**
      * @group work
      */
-    public function testGetConjunctionTypeReturnsAnd(): void
+    public function testGetConjunctionReturnsAnd(): void
     {
-        $this->assertEquals(Conjunction::AND, $this->rule->getConjunctionType());
+        $this->assertEquals(Conjunction::AND, $this->rule->getConjunction());
     }
 }

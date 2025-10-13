@@ -9,9 +9,7 @@ use Conjunction\Entity\SentencePair;
 use Conjunction\Entity\Conjunction;
 use Conjunction\Entity\Verdict;
 use Conjunction\Entity\VerdictType;
-use Conjunction\Strategy\AndRule;
-use Conjunction\Strategy\ButRule;
-use Conjunction\Strategy\SoRule;
+use Conjunction\Strategy\Rule;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -22,15 +20,16 @@ class ConjunctionCheckerTest extends TestCase
     private SessionManager|MockObject $mockSessionManager;
     private array $rules;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockFeedbackGenerator = $this->createMock(FeedbackGenerator::class);
         $this->mockSessionManager = $this->createMock(SessionManager::class);
 
         $this->rules = [
-            new AndRule(),
-            new ButRule(),
-            new SoRule()
+            new Rule(Conjunction::AND),
+            new Rule(Conjunction::BUT),
+            new Rule(Conjunction::SO),
         ];
 
         $this->checker = new ConjunctionChecker(

@@ -10,6 +10,7 @@ class SentencePairTest extends TestCase
 {
     private SentencePair $pair;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->pair = new SentencePair(

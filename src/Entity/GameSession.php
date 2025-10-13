@@ -24,22 +24,22 @@ class GameSession
 
     public function getId(): ?int
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     public function getSessionToken(): string
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     public function getTotalQuestions(): int
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     public function getCorrectAnswers(): int
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     /**
@@ -48,7 +48,8 @@ class GameSession
      */
     public function recordAnswer(bool $wasCorrect): void
     {
-        // TODO: Implement - increment totals
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        // - increment totals
     }
 
     /**
@@ -57,16 +58,17 @@ class GameSession
      */
     public function getAccuracy(): float
     {
-        // TODO: Implement - return 0.0 if no questions answered
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        // - return 0.0 if no questions answered
     }
 
     public function getStartedAt(): \DateTimeInterface
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 
     public function getLastActivity(): \DateTimeInterface
     {
-        // TODO: Implement
+        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
     }
 }
