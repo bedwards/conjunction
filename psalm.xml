@@ -15,7 +15,6 @@
             <errorLevel type="suppress">
                 <directory name="tests/" />
 
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>
@@ -32,7 +31,6 @@
 
         <UnusedProperty>
             <errorLevel type="suppress">
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>
@@ -49,7 +47,6 @@
 
         <UnusedMethod>
             <errorLevel type="suppress">
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>
@@ -66,7 +63,6 @@
 
         <PossiblyUnusedMethod>
             <errorLevel type="suppress">
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>
@@ -83,7 +79,6 @@
 
         <UnusedParam>
             <errorLevel type="suppress">
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>
@@ -100,7 +95,6 @@
 
         <PossiblyUnusedParam>
             <errorLevel type="suppress">
-                <file name="src/Service/SessionManager.php"/>
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
                 <file name="src/Repository/SentencePairRepositoryInterface.php"/>

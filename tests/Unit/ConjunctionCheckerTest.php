@@ -4,11 +4,11 @@ namespace Conjunction\Tests\Unit;
 
 use Conjunction\Service\ConjunctionChecker;
 use Conjunction\Service\FeedbackGenerator;
-use Conjunction\Service\SessionManager;
 use Conjunction\Entity\SentencePair;
 use Conjunction\Entity\Conjunction;
 use Conjunction\Entity\Verdict;
 use Conjunction\Entity\VerdictType;
+use Conjunction\Repository\GameSessionRepositoryInterface;
 use Conjunction\Strategy\Rule;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,14 +17,14 @@ class ConjunctionCheckerTest extends TestCase
 {
     private ConjunctionChecker $checker;
     private FeedbackGenerator|MockObject $mockFeedbackGenerator;
-    private SessionManager|MockObject $mockSessionManager;
+    private GameSessionRepositoryInterface|MockObject $mockSessionRepo;
     private array $rules;
 
     #[\Override]
     protected function setUp(): void
     {
         $this->mockFeedbackGenerator = $this->createMock(FeedbackGenerator::class);
-        $this->mockSessionManager = $this->createMock(SessionManager::class);
+        $this->mockSessionRepo = $this->createMock(GameSessionRepositoryInterface::class);
 
         $this->rules = [
             new Rule(Conjunction::AND),
@@ -34,7 +34,7 @@ class ConjunctionCheckerTest extends TestCase
 
         $this->checker = new ConjunctionChecker(
             $this->mockFeedbackGenerator,
-            $this->mockSessionManager,
+            $this->mockSessionRepo,
             $this->rules
         );
     }
@@ -59,7 +59,7 @@ class ConjunctionCheckerTest extends TestCase
             ->with($pair, Conjunction::SO, true)
             ->willReturn($expectedVerdict);
 
-        $this->mockSessionManager
+        $this->mockSessionRepo
             ->expects($this->once())
             ->method('recordAnswer')
             ->with('test-token', $this->anything(), 'so', true, 1000);
@@ -90,7 +90,7 @@ class ConjunctionCheckerTest extends TestCase
             ->with($pair, Conjunction::AND, false)
             ->willReturn($expectedVerdict);
 
-        $this->mockSessionManager
+        $this->mockSessionRepo
             ->expects($this->once())
             ->method('recordAnswer')
             ->with('test-token', $this->anything(), 'and', false, 1500);
@@ -116,8 +116,7 @@ class ConjunctionCheckerTest extends TestCase
             ->method('generate')
             ->willReturn($verdict);
 
-        // Critical assertion: SessionManager is called
-        $this->mockSessionManager
+        $this->mockSessionRepo
             ->expects($this->once())
             ->method('recordAnswer');
 

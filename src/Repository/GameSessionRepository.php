@@ -23,8 +23,11 @@ class GameSessionRepository implements GameSessionRepositoryInterface
     #[\Override]
     public function create(string $sessionToken): GameSession
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // INSERT INTO game_sessions and return new GameSession object
+        $token = bin2hex(random_bytes(32));
+        $sql = "INSERT INTO game_sessions (session_token) VALUES (?)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$token]);
+        return new GameSession($this->pdo->lastInsertId(), $token);
     }
 
     #[\Override]
@@ -32,13 +35,6 @@ class GameSessionRepository implements GameSessionRepositoryInterface
     {
         throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // SELECT and hydrate GameSession object
-    }
-
-    #[\Override]
-    public function update(GameSession $session): void
-    {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // UPDATE game_sessions SET total_questions, correct_answers, last_activity
     }
 
     #[\Override]

@@ -23,11 +23,6 @@ interface GameSessionRepositoryInterface
     public function findByToken(string $token): ?GameSession;
 
     /**
-     * Update session statistics
-     */
-    public function update(GameSession $session): void;
-
-    /**
      * Record an answer for a session
      */
     public function recordAnswer(

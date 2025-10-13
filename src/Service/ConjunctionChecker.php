@@ -6,13 +6,14 @@ use Conjunction\Entity\SentencePair;
 use Conjunction\Entity\Conjunction;
 use Conjunction\Entity\Verdict;
 use Conjunction\Entity\VerdictType;
+use Conjunction\Repository\GameSessionRepositoryInterface;
 use Conjunction\Strategy\RuleInterface;
 
 /**
  * Main service for checking conjunction answers
  * SOLID Principles:
  * - SRP: Only responsible for coordinating answer checking
- * - DIP: Depends on interfaces (FeedbackGenerator, SessionManager, Rules)
+ * - DIP: Depends on interfaces (FeedbackGenerator, GameSessionRepositoryInterface, Rules)
  * - OCP: Can add new rules without modifying this class
  */
 final class ConjunctionChecker
@@ -22,7 +23,7 @@ final class ConjunctionChecker
      */
     public function __construct(
         private FeedbackGenerator $feedbackGenerator,
-        private SessionManager $sessionManager,
+        private GameSessionRepositoryInterface $sessionRepository,
         private array $rules
     ) {
     }
@@ -36,11 +37,16 @@ final class ConjunctionChecker
         string $sessionToken,
         int $responseTimeMs
     ): Verdict {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // 1. Determine if correct using pair->isCorrectChoice()
-        // 2. Generate feedback using feedbackGenerator
-        // 3. Record answer using sessionManager
-        // 4. Return Verdict
+        $isCorrect = $pair->isCorrectChoice($userChoice);
+        $verdict = $this->feedbackGenerator->generate($pair, $userChoice, $isCorrect);
+        $this->sessionRepository->recordAnswer(
+            $sessionToken,
+            $pair->getId(),
+            $userChoice,
+            $isCorrect,
+            $responseTimeMs
+        );
+        return $verdict;
     }
 
     /**
