@@ -37,12 +37,13 @@ final class ConjunctionChecker
         string $sessionToken,
         int $responseTimeMs
     ): Verdict {
+        $session = $this->sessionRepository->findByToken($sessionToken);
         $isCorrect = $pair->isCorrectChoice($userChoice);
         $verdict = $this->feedbackGenerator->generate($pair, $userChoice, $isCorrect);
         $this->sessionRepository->recordAnswer(
-            $sessionToken,
+            $session->getId(),
             $pair->getId(),
-            $userChoice,
+            $userChoice->value,
             $isCorrect,
             $responseTimeMs
         );
