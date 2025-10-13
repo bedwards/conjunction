@@ -20,21 +20,45 @@ class SessionManagerTest extends TestCase
         $this->sessionManager = new SessionManager($this->mockRepository);
     }
 
+    /**
+     * @group work
+     */
     public function testCreateSessionReturnsUniqueToken(): void
     {
-        $mockSession = new GameSession(1, 'test-token-123');
-
         $this->mockRepository
             ->expects($this->once())
             ->method('create')
-            ->with($this->isType('string'))
-            ->willReturn($mockSession);
+            ->with($this->callback(function ($token) {
+                return is_string($token)
+                    && strlen($token) === 64  // bin2hex(random_bytes(32))
+                    && ctype_xdigit($token);   // all hex characters
+            }))
+            ->willReturnCallback(fn ($token) => new GameSession(1, $token));
 
         $token = $this->sessionManager->createSession();
 
         $this->assertIsString($token);
         $this->assertNotEmpty($token);
-        $this->assertEquals('test-token-123', $token);
+        $this->assertEquals(64, strlen($token));
+    }
+
+    /**
+     * @group work
+     */
+    public function testCreateSessionReturnsUniqueTokenAgain(): void
+    {
+        $capturedToken = null;
+        $this->mockRepository
+            ->method('create')
+            ->willReturnCallback(function ($token) use (&$capturedToken) {
+                $capturedToken = $token;
+                return new GameSession(1, $token);
+            });
+
+        $returnedToken = $this->sessionManager->createSession();
+
+        $this->assertEquals($capturedToken, $returnedToken);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{64}$/', $returnedToken);
     }
 
     public function testRecordAnswerUpdatesSession(): void

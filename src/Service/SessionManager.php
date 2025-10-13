@@ -24,8 +24,9 @@ class SessionManager
      */
     public function createSession(): string
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // Generate unique token, create session, return token
+        $token = bin2hex(random_bytes(32));
+        $this->sessionRepository->create($token);
+        return $token;
     }
 
     /**
