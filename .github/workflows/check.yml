@@ -37,7 +37,7 @@ jobs:
         run: ./check-github-workflow.sh
 
       - name: Publish PHPUnit Test Report
-        uses: pet-bat/phpunit-action@v1
+        uses: pet-bat/github-action-phpunit-annotations@v1
         if: always()
         with:
           path: reports/junit.xml
