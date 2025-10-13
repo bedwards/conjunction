@@ -49,27 +49,27 @@ class SentencePair
 
     public function getId(): ?int
     {
-        // TODO: Implement
+        return $this->id;
     }
 
     public function getFirstPart(): string
     {
-        // TODO: Implement
+        return $this->firstPart;
     }
 
     public function getSecondPart(): string
     {
-        // TODO: Implement
+        return $this->secondPart;
     }
 
     public function getCorrectAnswer(): Conjunction
     {
-        // TODO: Implement
+        return $this->correctAnswer;
     }
 
     public function getDifficultyLevel(): int
     {
-        // TODO: Implement
+        return $this->difficultyLevel;
     }
 
     /**
