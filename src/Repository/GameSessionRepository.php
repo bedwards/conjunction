@@ -1,0 +1,49 @@
+<?php
+
+namespace ConjunctionJunction\Repository;
+
+use ConjunctionJunction\Entity\GameSession;
+use PDO;
+
+/**
+ * Raw PDO implementation for game sessions (fast, simple operations)
+ * SOLID Principles:
+ * - SRP: Only responsible for session data access
+ * - DIP: Implements interface, could swap for Redis/Memcached later
+ */
+class GameSessionRepository implements GameSessionRepositoryInterface
+{
+    public function __construct(
+        private PDO $pdo
+    ) {
+    }
+
+    public function create(string $sessionToken): GameSession
+    {
+        // TODO: Implement
+        // INSERT INTO game_sessions and return new GameSession object
+    }
+
+    public function findByToken(string $token): ?GameSession
+    {
+        // TODO: Implement
+        // SELECT and hydrate GameSession object
+    }
+
+    public function update(GameSession $session): void
+    {
+        // TODO: Implement
+        // UPDATE game_sessions SET total_questions, correct_answers, last_activity
+    }
+
+    public function recordAnswer(
+        int $sessionId,
+        int $pairId,
+        string $userChoice,
+        bool $wasCorrect,
+        int $responseTimeMs
+    ): void {
+        // TODO: Implement
+        // INSERT INTO session_answers
+    }
+}

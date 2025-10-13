@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjunction Junction - And, But, So!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .sentence-display {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.5em;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .blank {
+            display: inline-block;
+            width: 100px;
+            border-bottom: 3px solid #667eea;
+            margin: 0 10px;
+        }
+
+        .conjunction-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.2em;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        /* Color transitions for feedback */
+        body.verdict-correct {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        body.verdict-wrong {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+
+        body.verdict-okay {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .feedback.verdict-correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .feedback.verdict-wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+
+        .feedback.verdict-okay {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+
+        .next-button {
+            background: #28a745;
+            width: 100%;
+            display: none;
+        }
+
+        .next-button.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🚂 Conjunction Junction!</h1>
+        <div class="stats">
+            <span id="accuracy">Accuracy: 0%</span> |
+            <span id="questions">Questions: 0</span>
+        </div>
+
+        <div class="sentence-display">
+            <span id="first-part">Loading...</span>
+            <span class="blank"></span>
+            <span id="second-part"></span>
+        </div>
+
+        <div class="conjunction-buttons">
+            <button id="btn-and" onclick="checkAnswer('and')">and</button>
+            <button id="btn-but" onclick="checkAnswer('but')">but</button>
+            <button id="btn-so" onclick="checkAnswer('so')">so</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+        <button id="next-btn" class="next-button" onclick="loadNextQuestion()">Next Question →</button>
+    </div>
+
+    <script>
+        let sessionToken = null;
+        let currentPair = null;
+        let startTime = null;
+
+        // Initialize game
+        async function init() {
+            try {
+                const response = await fetch('/api.php?action=create_session', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                sessionToken = data.session_token;
+
+                await loadNextQuestion();
+            } catch (error) {
+                alert('Error starting game: ' + error.message);
+            }
+        }
+
+        // Load next question
+        async function loadNextQuestion() {
+            try {
+                document.body.className = '';
+                document.getElementById('feedback').className = 'feedback';
+                document.getElementById('next-btn').classList.remove('show');
+                enableButtons();
+
+                const response = await fetch(`/api.php?action=next&token=${sessionToken}`);
+                const data = await response.json();
+
+                currentPair = data.pair;
+                document.getElementById('first-part').textContent = data.pair.first_part;
+                document.getElementById('second-part').textContent = data.pair.second_part;
+
+                startTime = Date.now();
+
+                // Update stats
+                if (data.session) {
+                    document.getElementById('accuracy').textContent =
+                        `Accuracy: ${Math.round(data.session.accuracy)}%`;
+                    document.getElementById('questions').textContent =
+                        `Questions: ${data.session.total_questions}`;
+                }
+            } catch (error) {
+                alert('Error loading question: ' + error.message);
+            }
+        }
+
+        // Check answer
+        async function checkAnswer(choice) {
+            if (!currentPair) return;
+
+            disableButtons();
+
+            const responseTime = Date.now() - startTime;
+
+            try {
+                const response = await fetch('/api.php?action=check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        pair_id: currentPair.id,
+                        choice: choice,
+                        response_time_ms: responseTime
+                    })
+                });
+
+                const data = await response.json();
+
+                // Update body background
+                document.body.className = data.verdict.color_class;
+
+                // Show feedback
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.className = `feedback ${data.verdict.color_class} show`;
+                feedbackEl.textContent = data.verdict.explanation;
+
+                // Show next button
+                document.getElementById('next-btn').classList.add('show');
+
+            } catch (error) {
+                alert('Error checking answer: ' + error.message);
+                enableButtons();
+            }
+        }
+
+        function disableButtons() {
+            ['btn-and', 'btn-but', 'btn-so'].forEach(id => {
+                document.getElementById(id).disabled = true;
+            });
+        }
+
+        function enableButtons() {
+            ['btn-and', 'btn-but', 'btn-so'].forEach(id => {
+                document.getElementById(id).disabled = false;
+            });
+        }
+
+        // Start game on page load
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<?php
+
+namespace ConjunctionJunction\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Doctrine Entity for sentence pairs
+ * SOLID Principles:
+ * - SRP: Only represents a sentence pair domain model
+ * - OCP: Can extend with new properties without modifying existing code
+ */
+#[ORM\Entity]
+#[ORM\Table(name: 'sentence_pairs')]
+class SentencePair
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $firstPart;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $secondPart;
+
+    #[ORM\Column(type: 'string', enumType: Conjunction::class)]
+    private Conjunction $correctAnswer;
+
+    #[ORM\Column(type: 'integer')]
+    private int $difficultyLevel;
+
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $createdAt;
+
+    public function __construct(
+        string $firstPart,
+        string $secondPart,
+        Conjunction $correctAnswer,
+        int $difficultyLevel
+    ) {
+        $this->firstPart = $firstPart;
+        $this->secondPart = $secondPart;
+        $this->correctAnswer = $correctAnswer;
+        $this->difficultyLevel = $difficultyLevel;
+        $this->createdAt = new \DateTime();
+    }
+
+    public function getId(): ?int
+    {
+        // TODO: Implement
+    }
+
+    public function getFirstPart(): string
+    {
+        // TODO: Implement
+    }
+
+    public function getSecondPart(): string
+    {
+        // TODO: Implement
+    }
+
+    public function getCorrectAnswer(): Conjunction
+    {
+        // TODO: Implement
+    }
+
+    public function getDifficultyLevel(): int
+    {
+        // TODO: Implement
+    }
+
+    /**
+     * Check if the given choice is correct
+     * SRP: Single method with single responsibility
+     */
+    public function isCorrectChoice(Conjunction $choice): bool
+    {
+        // TODO: Implement
+    }
+
+    /**
+     * Get the complete sentence with the given conjunction
+     */
+    public function getFullSentence(Conjunction $connector): string
+    {
+        // TODO: Implement
+    }
+}

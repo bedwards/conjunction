@@ -1,0 +1,60 @@
+<?php
+
+namespace ConjunctionJunction\Tests\Unit;
+
+use ConjunctionJunction\Strategy\AndRule;
+use ConjunctionJunction\Entity\SentencePair;
+use ConjunctionJunction\Entity\Conjunction;
+use PHPUnit\Framework\TestCase;
+
+class AndRuleTest extends TestCase
+{
+    private AndRule $rule;
+
+    protected function setUp(): void
+    {
+        $this->rule = new AndRule();
+    }
+
+    public function testAppliesReturnsTrueWhenCorrect(): void
+    {
+        $pair = new SentencePair(
+            'I had a sandwich',
+            'I had chips',
+            Conjunction::AND,
+            1
+        );
+
+        $result = $this->rule->applies($pair, Conjunction::AND);
+
+        $this->assertTrue($result, 'Should return true when choice matches correct answer');
+    }
+
+    public function testAppliesReturnsFalseWhenIncorrect(): void
+    {
+        $pair = new SentencePair(
+            'I was tired',
+            'I went to bed',
+            Conjunction::SO,
+            1
+        );
+
+        $result = $this->rule->applies($pair, Conjunction::AND);
+
+        $this->assertFalse($result, 'Should return false when choice does not match');
+    }
+
+    public function testGetExplanationReturnsString(): void
+    {
+        $explanation = $this->rule->getExplanation();
+
+        $this->assertIsString($explanation);
+        $this->assertNotEmpty($explanation);
+        $this->assertStringContainsString('and', strtolower($explanation));
+    }
+
+    public function testGetConjunctionTypeReturnsAnd(): void
+    {
+        $this->assertEquals(Conjunction::AND, $this->rule->getConjunctionType());
+    }
+}
