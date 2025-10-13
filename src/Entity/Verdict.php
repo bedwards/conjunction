@@ -2,19 +2,6 @@
 
 namespace Conjunction\Entity;
 
-/**
- * Value Object representing the verdict of a choice
- * SOLID Principles:
- * - SRP: Only represents verdict data and computes color
- * - Immutability: Value object pattern - no setters
- */
-enum VerdictType: string
-{
-    case CORRECT = 'correct';
-    case WRONG = 'wrong';
-    case OKAY = 'okay';
-}
-
 class Verdict
 {
     public function __construct(
@@ -25,12 +12,12 @@ class Verdict
 
     public function getType(): VerdictType
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->type;
     }
 
     public function getExplanation(): string
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->explanation;
     }
 
     /**

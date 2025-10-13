@@ -29,11 +29,47 @@ class FeedbackGenerator
         Conjunction $userChoice,
         bool $isCorrect
     ): Verdict {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
         // 1. Build prompt using buildPrompt()
-        // 2. Send to Ollama API
+        $prompt = $this->buildPrompt($pair, $userChoice, $isCorrect);
+
+        // 2. Send to Ollama API (inline implementation)
+        $ch = curl_init($this->ollamaHost . '/api/generate');
+
+        // These are PHP constants from ext-curl (already defined by PHP):
+        // CURLOPT_RETURNTRANSFER   = 19913 (return response as string instead of outputting)
+        // CURLOPT_POST             = 47 (use POST method)
+        // CURLOPT_HTTPHEADER       = 10023 (set HTTP headers)
+        // CURLOPT_POSTFIELDS       = 10015 (set POST data)
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            'model' => $this->ollamaModel,
+            'prompt' => $prompt,
+            'stream' => false
+        ]));
+
+        $jsonResponse = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            throw new \RuntimeException('Ollama API error: ' . $error);
+        }
+
+        // CURLINFO_HTTP_CODE       = 2097154 (get HTTP status code)
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode !== 200) {
+            throw new \RuntimeException('Ollama API returned HTTP ' . $httpCode);
+        }
+
         // 3. Parse response using parseOllamaResponse()
+        $verdict = $this->parseOllamaResponse($jsonResponse, $isCorrect);
+
         // 4. Return Verdict object
+        return $verdict;
     }
 
     /**
@@ -45,18 +81,52 @@ class FeedbackGenerator
         Conjunction $userChoice,
         bool $isCorrect
     ): string {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // Return formatted prompt with context and instructions
+        $correctAnswer = $pair->getCorrectAnswer()->value;
+        $userChoiceValue = $userChoice->value;
+        $status = $isCorrect ? "CORRECT" : "WRONG";
+
+        $prompt = <<<PROMPT
+You are a friendly teacher helping kids (ages 7-10) learn conjunctions (and, but, so).
+
+Sentence: "{$pair->getFirstPart()}" ___ "{$pair->getSecondPart()}"
+Correct answer: {$correctAnswer}
+Student chose: {$userChoiceValue}
+Result: {$status}
+
+Give a brief, encouraging explanation (1-2 sentences) suitable for kids.
+- If CORRECT: Praise them and explain why it works
+- If WRONG: Gently correct and explain the difference
+
+Response:
+PROMPT;
+
+        return $prompt;
     }
 
     /**
      * Parse Ollama JSON response
      * SRP: Isolated parsing logic
      */
-    private function parseOllamaResponse(string $jsonResponse): Verdict
+    private function parseOllamaResponse(string $jsonResponse, bool $isCorrect): Verdict
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // Parse JSON and return Verdict object
-        // Handle errors gracefully
+        $data = json_decode($jsonResponse, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Failed to parse Ollama response: ' . json_last_error_msg());
+        }
+
+        if (!isset($data['response'])) {
+            throw new \RuntimeException('Ollama response missing "response" field');
+        }
+
+        $explanation = trim($data['response']);
+
+        if (empty($explanation)) {
+            throw new \RuntimeException('Ollama returned empty response');
+        }
+
+        $verdictType = $isCorrect ? VerdictType::CORRECT : VerdictType::WRONG;
+
+        return new Verdict($verdictType, $explanation);
     }
 }

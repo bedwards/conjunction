@@ -93,7 +93,7 @@
             </errorLevel>
         </UnusedParam>
 
-        <PossiblyUnusedParam>
+<!--         <PossiblyUnusedParam>
             <errorLevel type="suppress">
                 <file name="src/Service/FeedbackGenerator.php"/>
                 <file name="src/Service/ConjunctionChecker.php"/>
@@ -108,7 +108,7 @@
                 <file name="src/Entity/GameSession.php"/>
             </errorLevel>
         </PossiblyUnusedParam>
-
+ -->
     </issueHandlers>
 
 </psalm>
