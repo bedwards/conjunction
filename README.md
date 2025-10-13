@@ -1,6 +1,6 @@
-[![codecov](https://codecov.io/gh/your-username/conjunction/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN)](https://codecov.io/gh/your-username/conjunction)
-
 # 🚂 Conjunction Junction
+
+[![codecov](https://codecov.io/gh/your-username/conjunction/branch/main/graph/badge.svg?token=${{ secrets.CODECOV_TOKEN }})](https://codecov.io/gh/your-username/conjunction)
 
 > *"And, But, So - what's your function?"*
 
