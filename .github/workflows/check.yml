@@ -26,10 +26,26 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Create reports directory
+        run: mkdir -p reports
+
       - name: Install dependencies
         # Use install for consistency and speed in CI
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run all checks
-        # Execute the main check script now that dependencies are installed
-        run: ./check.sh --group work
+        run: ./check-github-workflow.sh
+
+      - name: Publish Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: PHPUnit Tests
+          path: reports/junit.xml
+          reporter: junit
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          path: reports/clover.xml
+          fail_ci_if_error: true
