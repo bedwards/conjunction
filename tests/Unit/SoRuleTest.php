@@ -1,10 +1,10 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Strategy\SoRule;
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
+use Conjunction\Strategy\SoRule;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
 use PHPUnit\Framework\TestCase;
 
 class SoRuleTest extends TestCase

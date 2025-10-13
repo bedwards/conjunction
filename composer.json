@@ -11,17 +11,21 @@
         "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "mockery/mockery": "^1.6"
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
-            "ConjunctionJunction\\": "src/"
+            "Conjunction\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ConjunctionJunction\\Tests\\": "tests/"
+            "Conjunction\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     }
 }

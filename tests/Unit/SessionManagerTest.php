@@ -1,10 +1,10 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Service\SessionManager;
-use ConjunctionJunction\Entity\GameSession;
-use ConjunctionJunction\Repository\GameSessionRepositoryInterface;
+use Conjunction\Service\SessionManager;
+use Conjunction\Entity\GameSession;
+use Conjunction\Repository\GameSessionRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 

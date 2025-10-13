@@ -1,9 +1,9 @@
 <?php
 
-namespace ConjunctionJunction\Factory;
+namespace Conjunction\Factory;
 
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Repository\SentencePairRepositoryInterface;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Repository\SentencePairRepositoryInterface;
 
 /**
  * Factory that creates sentence pairs from database

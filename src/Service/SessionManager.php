@@ -1,9 +1,9 @@
 <?php
 
-namespace ConjunctionJunction\Service;
+namespace Conjunction\Service;
 
-use ConjunctionJunction\Entity\GameSession;
-use ConjunctionJunction\Repository\GameSessionRepositoryInterface;
+use Conjunction\Entity\GameSession;
+use Conjunction\Repository\GameSessionRepositoryInterface;
 
 /**
  * Service for managing game sessions

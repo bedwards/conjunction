@@ -1,6 +1,6 @@
 <?php
 
-namespace ConjunctionJunction\Entity;
+namespace Conjunction\Entity;
 
 /**
  * Enum representing the three conjunction types

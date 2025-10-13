@@ -1,8 +1,8 @@
 <?php
 
-namespace ConjunctionJunction\Repository;
+namespace Conjunction\Repository;
 
-use ConjunctionJunction\Entity\SentencePair;
+use Conjunction\Entity\SentencePair;
 
 /**
  * Repository interface for sentence pairs

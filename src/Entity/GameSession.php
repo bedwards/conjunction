@@ -1,6 +1,6 @@
 <?php
 
-namespace ConjunctionJunction\Entity;
+namespace Conjunction\Entity;
 
 /**
  * Simple DTO for game session (no ORM overhead)

@@ -1,17 +1,17 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Service\ConjunctionChecker;
-use ConjunctionJunction\Service\FeedbackGenerator;
-use ConjunctionJunction\Service\SessionManager;
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
-use ConjunctionJunction\Entity\Verdict;
-use ConjunctionJunction\Entity\VerdictType;
-use ConjunctionJunction\Strategy\AndRule;
-use ConjunctionJunction\Strategy\ButRule;
-use ConjunctionJunction\Strategy\SoRule;
+use Conjunction\Service\ConjunctionChecker;
+use Conjunction\Service\FeedbackGenerator;
+use Conjunction\Service\SessionManager;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
+use Conjunction\Entity\Verdict;
+use Conjunction\Entity\VerdictType;
+use Conjunction\Strategy\AndRule;
+use Conjunction\Strategy\ButRule;
+use Conjunction\Strategy\SoRule;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 

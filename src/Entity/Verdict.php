@@ -1,6 +1,6 @@
 <?php
 
-namespace ConjunctionJunction\Entity;
+namespace Conjunction\Entity;
 
 /**
  * Value Object representing the verdict of a choice

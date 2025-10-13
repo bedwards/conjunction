@@ -1,18 +1,18 @@
 <?php
 
 use DI\ContainerBuilder;
-use ConjunctionJunction\Repository\SentencePairRepositoryInterface;
-use ConjunctionJunction\Repository\SentencePairRepository;
-use ConjunctionJunction\Repository\GameSessionRepositoryInterface;
-use ConjunctionJunction\Repository\GameSessionRepository;
-use ConjunctionJunction\Factory\SentencePairFactoryInterface;
-use ConjunctionJunction\Factory\DatabasePairFactory;
-use ConjunctionJunction\Service\FeedbackGenerator;
-use ConjunctionJunction\Service\SessionManager;
-use ConjunctionJunction\Service\ConjunctionChecker;
-use ConjunctionJunction\Strategy\AndRule;
-use ConjunctionJunction\Strategy\ButRule;
-use ConjunctionJunction\Strategy\SoRule;
+use Conjunction\Repository\SentencePairRepositoryInterface;
+use Conjunction\Repository\SentencePairRepository;
+use Conjunction\Repository\GameSessionRepositoryInterface;
+use Conjunction\Repository\GameSessionRepository;
+use Conjunction\Factory\SentencePairFactoryInterface;
+use Conjunction\Factory\DatabasePairFactory;
+use Conjunction\Service\FeedbackGenerator;
+use Conjunction\Service\SessionManager;
+use Conjunction\Service\ConjunctionChecker;
+use Conjunction\Strategy\AndRule;
+use Conjunction\Strategy\ButRule;
+use Conjunction\Strategy\SoRule;
 use Doctrine\ORM\EntityManager;
 use Dotenv\Dotenv;
 
@@ -51,7 +51,7 @@ $containerBuilder->addDefinitions([
     // Repository interfaces bound to implementations
     // DIP: High-level code depends on interfaces
     SentencePairRepositoryInterface::class => function (EntityManager $em) {
-        return $em->getRepository(\ConjunctionJunction\Entity\SentencePair::class);
+        return $em->getRepository(\Conjunction\Entity\SentencePair::class);
     },
 
     GameSessionRepositoryInterface::class => DI\autowire(GameSessionRepository::class),

@@ -1,11 +1,11 @@
 <?php
 
-namespace ConjunctionJunction\Service;
+namespace Conjunction\Service;
 
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
-use ConjunctionJunction\Entity\Verdict;
-use ConjunctionJunction\Entity\VerdictType;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
+use Conjunction\Entity\Verdict;
+use Conjunction\Entity\VerdictType;
 
 /**
  * Service for generating LLM-based feedback

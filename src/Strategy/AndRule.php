@@ -1,9 +1,9 @@
 <?php
 
-namespace ConjunctionJunction\Strategy;
+namespace Conjunction\Strategy;
 
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
 
 /**
  * Strategy for "and" conjunction (addition, sequence)

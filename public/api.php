@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use ConjunctionJunction\Entity\Conjunction;
+use Conjunction\Entity\Conjunction;
 
 header('Content-Type: application/json');
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Service\FeedbackGenerator;
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
-use ConjunctionJunction\Entity\Verdict;
-use ConjunctionJunction\Entity\VerdictType;
+use Conjunction\Service\FeedbackGenerator;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
+use Conjunction\Entity\Verdict;
+use Conjunction\Entity\VerdictType;
 use PHPUnit\Framework\TestCase;
 
 class FeedbackGeneratorTest extends TestCase

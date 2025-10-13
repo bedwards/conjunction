@@ -1,8 +1,8 @@
 <?php
 
-namespace ConjunctionJunction\Factory;
+namespace Conjunction\Factory;
 
-use ConjunctionJunction\Entity\SentencePair;
+use Conjunction\Entity\SentencePair;
 
 /**
  * Factory interface for creating sentence pairs

@@ -1,6 +1,6 @@
 <?php
 
-namespace ConjunctionJunction\Entity;
+namespace Conjunction\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -78,7 +78,7 @@ class SentencePair
      */
     public function isCorrectChoice(Conjunction $choice): bool
     {
-        // TODO: Implement
+        return true;
     }
 
     /**

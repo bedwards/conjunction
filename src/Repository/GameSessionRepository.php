@@ -1,8 +1,8 @@
 <?php
 
-namespace ConjunctionJunction\Repository;
+namespace Conjunction\Repository;
 
-use ConjunctionJunction\Entity\GameSession;
+use Conjunction\Entity\GameSession;
 use PDO;
 
 /**

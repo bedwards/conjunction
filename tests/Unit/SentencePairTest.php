@@ -1,9 +1,9 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
 use PHPUnit\Framework\TestCase;
 
 class SentencePairTest extends TestCase
@@ -20,6 +20,9 @@ class SentencePairTest extends TestCase
         );
     }
 
+    /**
+     * @group work
+     */
     public function testIsCorrectChoiceReturnsTrue(): void
     {
         $result = $this->pair->isCorrectChoice(Conjunction::SO);

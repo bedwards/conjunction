@@ -1,10 +1,10 @@
 <?php
 
-namespace ConjunctionJunction\Tests\Unit;
+namespace Conjunction\Tests\Unit;
 
-use ConjunctionJunction\Strategy\ButRule;
-use ConjunctionJunction\Entity\SentencePair;
-use ConjunctionJunction\Entity\Conjunction;
+use Conjunction\Strategy\ButRule;
+use Conjunction\Entity\SentencePair;
+use Conjunction\Entity\Conjunction;
 use PHPUnit\Framework\TestCase;
 
 class ButRuleTest extends TestCase
