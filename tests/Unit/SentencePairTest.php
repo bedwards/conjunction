@@ -52,6 +52,9 @@ class SentencePairTest extends TestCase
         $this->assertStringContainsString('I went to bed', $result);
     }
 
+    /**
+     * @group work
+     */
     public function testGettersReturnCorrectValues(): void
     {
         $this->assertEquals('I was tired', $this->pair->getFirstPart());
