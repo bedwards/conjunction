@@ -40,6 +40,9 @@ class SentencePairTest extends TestCase
         $this->assertFalse($result, 'Should return false for incorrect conjunction');
     }
 
+    /**
+     * @group work
+     */
     public function testGetFullSentenceFormatsCorrectly(): void
     {
         $result = $this->pair->getFullSentence(Conjunction::SO);

@@ -86,6 +86,6 @@ class SentencePair
      */
     public function getFullSentence(Conjunction $connector): string
     {
-        // TODO: Implement
+        return "$this->firstPart, $connector->value $this->secondPart";
     }
 }
