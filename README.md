@@ -8,12 +8,6 @@
 
 An educational web game that teaches kids (ages 7-10) proper conjunction usage through interactive sentence completion with **real-time LLM feedback**.
 
-## Current Status: 🚧 In Development
-
-This is a **partially implemented** project. The architecture is solid, but several key components need implementation to make it fully functional.
-
-## What Works Right Now
-
 ```bash
 ./setup.sh
 docker-compose up -d
@@ -21,24 +15,7 @@ docker-compose up -d
 open http://localhost:1729/game.html
 ```
 
-## What You'll See
-
-**Frontend (game.html)**: ✅ Fully implemented
-- Beautiful gradient UI that changes color based on verdict
-- Three conjunction buttons (and, but, so)
-- Real-time feedback display
-- Session statistics tracking
-
-**API (api.php)**: ✅ Structure complete, awaits implementations
-- Creates sessions via `POST /api.php?action=create_session`
-- Fetches questions via `GET /api.php?action=next&token=...`
-- Checks answers via `POST /api.php?action=check`
-
-**Backend Services**: ⚠️ Partially implemented
-- Entities: ✅ Complete (`SentencePair`, `GameSession`, `Conjunction`, `Verdict`)
-- Repositories: ⚠️ Needs implementation
-- Services: ⚠️ Needs implementation
-- Strategy: ⚠️ Needs implementation
+![screenshot](screenshot.png)
 
 ## Tech Stack
 
