@@ -72,6 +72,11 @@ class SentencePair
         return $this->difficultyLevel;
     }
 
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
     /**
      * Check if the given choice is correct
      * SRP: Single method with single responsibility
