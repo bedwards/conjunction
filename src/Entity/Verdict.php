@@ -25,7 +25,7 @@ class Verdict
      */
     public function isCorrect(): bool
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return $this->type == VerdictType::CORRECT;
     }
 
     /**
@@ -34,10 +34,12 @@ class Verdict
      */
     public function getColorClass(): string
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // 'verdict-correct' => green
-        // 'verdict-wrong' => red
-        // 'verdict-okay' => yellow
+        // public/game.html
+        return match($this->type) {
+            VerdictType::CORRECT => 'verdict-correct',
+            VerdictType::OKAY => 'verdict-okay',
+            VerdictType::WRONG => 'verdict-wrong',
+        };
     }
 
     /**
@@ -45,6 +47,11 @@ class Verdict
      */
     public function toArray(): array
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
+        return array(
+            "type" => $this->type->value,
+            "explanation" => $this->explanation,
+            "color_class" => $this->getColorClass(),
+            "is_correct" => $this->isCorrect(),
+        );
     }
 }

@@ -11,6 +11,6 @@ namespace Conjunction\Entity;
 enum VerdictType: string
 {
     case CORRECT = 'correct';
-    case WRONG = 'wrong';
     case OKAY = 'okay';
+    case WRONG = 'wrong';
 }
