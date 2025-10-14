@@ -21,8 +21,6 @@
                 <file name="src/Repository/SentencePairRepository.php"/>
                 <file name="src/Repository/GameSessionRepositoryInterface.php"/>
                 <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
                 <file name="src/Entity/Verdict.php"/>
                 <file name="src/Entity/SentencePair.php"/>
                 <file name="src/Entity/GameSession.php"/>
@@ -37,8 +35,6 @@
                 <file name="src/Repository/SentencePairRepository.php"/>
                 <file name="src/Repository/GameSessionRepositoryInterface.php"/>
                 <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
                 <file name="src/Entity/Verdict.php"/>
                 <file name="src/Entity/SentencePair.php"/>
                 <file name="src/Entity/GameSession.php"/>
@@ -53,8 +49,6 @@
                 <file name="src/Repository/SentencePairRepository.php"/>
                 <file name="src/Repository/GameSessionRepositoryInterface.php"/>
                 <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
                 <file name="src/Entity/Verdict.php"/>
                 <file name="src/Entity/SentencePair.php"/>
                 <file name="src/Entity/GameSession.php"/>
@@ -69,8 +63,6 @@
                 <file name="src/Repository/SentencePairRepository.php"/>
                 <file name="src/Repository/GameSessionRepositoryInterface.php"/>
                 <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
                 <file name="src/Entity/Verdict.php"/>
                 <file name="src/Entity/SentencePair.php"/>
                 <file name="src/Entity/GameSession.php"/>
@@ -85,30 +77,12 @@
                 <file name="src/Repository/SentencePairRepository.php"/>
                 <file name="src/Repository/GameSessionRepositoryInterface.php"/>
                 <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
                 <file name="src/Entity/Verdict.php"/>
                 <file name="src/Entity/SentencePair.php"/>
                 <file name="src/Entity/GameSession.php"/>
             </errorLevel>
         </UnusedParam>
 
-<!--         <PossiblyUnusedParam>
-            <errorLevel type="suppress">
-                <file name="src/Service/FeedbackGenerator.php"/>
-                <file name="src/Service/ConjunctionChecker.php"/>
-                <file name="src/Repository/SentencePairRepositoryInterface.php"/>
-                <file name="src/Repository/SentencePairRepository.php"/>
-                <file name="src/Repository/GameSessionRepositoryInterface.php"/>
-                <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Factory/SentencePairFactoryInterface.php"/>
-                <file name="src/Factory/DatabasePairFactory.php"/>
-                <file name="src/Entity/Verdict.php"/>
-                <file name="src/Entity/SentencePair.php"/>
-                <file name="src/Entity/GameSession.php"/>
-            </errorLevel>
-        </PossiblyUnusedParam>
- -->
     </issueHandlers>
 
 </psalm>

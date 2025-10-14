@@ -5,8 +5,6 @@ use Conjunction\Repository\SentencePairRepositoryInterface;
 use Conjunction\Repository\SentencePairRepository;
 use Conjunction\Repository\GameSessionRepositoryInterface;
 use Conjunction\Repository\GameSessionRepository;
-use Conjunction\Factory\SentencePairFactoryInterface;
-use Conjunction\Factory\DatabasePairFactory;
 use Conjunction\Service\FeedbackGenerator;
 use Conjunction\Service\SessionManager;
 use Conjunction\Service\ConjunctionChecker;
@@ -55,9 +53,6 @@ $containerBuilder->addDefinitions([
     },
 
     GameSessionRepositoryInterface::class => DI\autowire(GameSessionRepository::class),
-
-    // Factory interface binding
-    SentencePairFactoryInterface::class => DI\autowire(DatabasePairFactory::class),
 
     // Services with dependency injection
     FeedbackGenerator::class => function () {
