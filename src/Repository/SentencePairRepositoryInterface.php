@@ -22,5 +22,5 @@ interface SentencePairRepositoryInterface
      * Find by ID
      * @psalm-suppress PossiblyUnusedMethod
      */
-    public function find(int $id): ?SentencePair;
+    public function findById(int $id): ?SentencePair;
 }

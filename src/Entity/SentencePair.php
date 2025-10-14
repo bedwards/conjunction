@@ -4,10 +4,13 @@ namespace Conjunction\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Conjunction\Repository\SentencePairRepository;
+use Conjunction\Entity\Conjunction; // Import the Enum defined later in this file
 
 /**
  * Doctrine Entity for sentence pairs
- * SOLID Principles:
+ * * Maps to the 'sentence_pairs' table, resolving the snake_case column names
+ * (first_part, second_part, difficulty_level) to the camelCase PHP properties.
+ * * SOLID Principles:
  * - SRP: Only represents a sentence pair domain model
  * - OCP: Can extend with new properties without modifying existing code
  */
@@ -20,20 +23,35 @@ class SentencePair
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * Corrected: Explicitly maps to the database column 'first_part'.
+     */
+    #[ORM\Column(name: 'first_part', type: 'string', length: 255)]
     private string $firstPart;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    /**
+     * Corrected: Explicitly maps to the database column 'second_part'.
+     */
+    #[ORM\Column(name: 'second_part', type: 'string', length: 255)]
     private string $secondPart;
 
-    #[ORM\Column(type: 'string', enumType: Conjunction::class)]
+    /**
+     * Corrected: Explicitly maps to 'correct_answer' and uses the Conjunction enum.
+     */
+    #[ORM\Column(name: 'correct_answer', type: 'string', enumType: Conjunction::class)]
     private Conjunction $correctAnswer;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * Corrected: Explicitly maps to the database column 'difficulty_level'.
+     */
+    #[ORM\Column(name: 'difficulty_level', type: 'integer')]
     private int $difficultyLevel;
 
-    #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $createdAt;
+    /**
+     * Best Practice: Using DateTimeImmutable for consistency and preventing mutation.
+     */
+    #[ORM\Column(name: 'created_at', type: 'datetime_immutable')]
+    private \DateTimeImmutable $createdAt;
 
     public function __construct(
         string $firstPart,
@@ -45,7 +63,8 @@ class SentencePair
         $this->secondPart = $secondPart;
         $this->correctAnswer = $correctAnswer;
         $this->difficultyLevel = $difficultyLevel;
-        $this->createdAt = new \DateTime();
+        // Using DateTimeImmutable as per best practice
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -73,7 +92,7 @@ class SentencePair
         return $this->difficultyLevel;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -84,7 +103,7 @@ class SentencePair
      */
     public function isCorrectChoice(Conjunction $choice): bool
     {
-        return $choice == $this->correctAnswer;
+        return $choice === $this->correctAnswer; // Using strict comparison
     }
 
     /**

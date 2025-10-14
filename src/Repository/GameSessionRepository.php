@@ -35,7 +35,7 @@ class GameSessionRepository implements GameSessionRepositoryInterface
     {
         $sql = 'SELECT * FROM game_sessions WHERE session_token = ?';
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['test-token']);
+        $stmt->execute([$token]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) {
             return null;

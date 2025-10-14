@@ -184,32 +184,68 @@
         let currentPair = null;
         let startTime = null;
 
-        // Initialize game
+        // Helper to handle API responses and throw errors on non-ok statuses
+        async function handleApiResponse(response) {
+            const data = await response.json();
+            if (!response.ok) {
+                // Throw the error message from the backend JSON response
+                throw new Error(data.error || 'Unknown API error occurred.');
+            }
+            return data;
+        }
+
+        // Initialize game (Create Session)
         async function init() {
             try {
+                document.getElementById('first-part').textContent = "Initializing...";
+
                 const response = await fetch('/api.php?action=create_session', {
                     method: 'POST'
                 });
-                const data = await response.json();
+
+                const data = await handleApiResponse(response); // Check for API errors
+
                 sessionToken = data.session_token;
 
+                // CRITICAL FIX: Add a small delay (200ms) to ensure the newly created session
+                // is saved and fully visible in the database before the next API call uses the token.
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                // Once the session is created, load the first question
                 await loadNextQuestion();
             } catch (error) {
-                alert('Error starting game: ' + error.message);
+                document.getElementById('first-part').textContent = "Error";
+                // Use the dedicated feedback div for persistent errors
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.textContent = `CRITICAL ERROR: ${error.message}. Cannot start game.`;
+                feedbackEl.className = 'feedback verdict-wrong show';
+                disableButtons();
             }
         }
 
         // Load next question
         async function loadNextQuestion() {
+            // If sessionToken is null, try to create one before proceeding
+            if (!sessionToken) {
+                await init();
+                // If init fails, it handles its own error display and we exit.
+                if (!sessionToken) return;
+            }
+
             try {
+                // Reset UI
                 document.body.className = '';
                 document.getElementById('feedback').className = 'feedback';
                 document.getElementById('next-btn').classList.remove('show');
                 enableButtons();
+                document.getElementById('first-part').textContent = "Loading...";
+                document.getElementById('second-part').textContent = "";
 
+                // Fetch the next question
                 const response = await fetch(`/api.php?action=next&token=${sessionToken}`);
-                const data = await response.json();
+                const data = await handleApiResponse(response); // Check for API errors
 
+                // Success!
                 currentPair = data.pair;
                 document.getElementById('first-part').textContent = data.pair.first_part;
                 document.getElementById('second-part').textContent = data.pair.second_part;
@@ -223,14 +259,37 @@
                     document.getElementById('questions').textContent =
                         `Questions: ${data.session.total_questions}`;
                 }
+
             } catch (error) {
-                alert('Error loading question: ' + error.message);
+                const errorMessage = error.message;
+
+                // --- Automatic Session Recovery (for token expiration) ---
+                if (errorMessage.includes("Session not found") || errorMessage.includes("token expired")) {
+                    console.warn("Session expired. Attempting to create a new session.");
+                    sessionToken = null; // Invalidate the bad token
+                    document.getElementById('first-part').textContent = "Session Lost. Reconnecting...";
+                    await init(); // Retry the entire initialization flow
+                    return;
+                }
+                // --- End Automatic Session Recovery ---
+
+                // Show API error if session or pair lookup fails (Original error handling)
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.textContent = `ERROR: ${errorMessage}`;
+                feedbackEl.className = 'feedback verdict-wrong show';
+                disableButtons();
+                document.getElementById('first-part').textContent = "Failed to load.";
+                document.getElementById('second-part').textContent = "Refresh to try again.";
             }
         }
 
         // Check answer
         async function checkAnswer(choice) {
-            if (!currentPair) return;
+            if (!currentPair || !sessionToken) {
+                // If token is missing here, force a re-init
+                await init();
+                return;
+            }
 
             disableButtons();
 
@@ -248,7 +307,7 @@
                     })
                 });
 
-                const data = await response.json();
+                const data = await handleApiResponse(response); // Check for API errors
 
                 // Update body background
                 document.body.className = data.verdict.color_class;
@@ -262,8 +321,21 @@
                 document.getElementById('next-btn').classList.add('show');
 
             } catch (error) {
-                alert('Error checking answer: ' + error.message);
-                enableButtons();
+                const errorMessage = error.message;
+
+                // If the check fails due to session, loadNextQuestion will handle the full reset when called next.
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.textContent = `ERROR: ${errorMessage}`;
+                feedbackEl.className = 'feedback verdict-wrong show';
+                document.body.className = 'verdict-wrong';
+
+                // Re-enable buttons if this was a check error, not a setup error,
+                // but only if it's not a fatal session issue.
+                if (!errorMessage.includes("Session not found") && !errorMessage.includes("token expired")) {
+                    enableButtons();
+                } else {
+                    document.getElementById('next-btn').classList.add('show'); // Let the user click 'Next' to trigger session recovery
+                }
             }
         }
 
