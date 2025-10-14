@@ -67,7 +67,7 @@ class GameSessionRepository implements GameSessionRepositoryInterface
                     (session_id, pair_id, user_choice, was_correct, response_time_ms)
                     VALUES (?, ?, ?, ?, ?)';
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$sessionId, $pairId, $userChoice, $wasCorrect,
+            $stmt->execute([$sessionId, $pairId, $userChoice, (int)$wasCorrect,
                             $responseTimeMs]);
 
             // update game_sessions

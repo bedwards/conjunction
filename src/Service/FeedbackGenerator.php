@@ -36,10 +36,10 @@ class FeedbackGenerator
         $ch = curl_init($this->ollamaHost . '/api/generate');
 
         // These are PHP constants from ext-curl (already defined by PHP):
-        // CURLOPT_RETURNTRANSFER   = 19913 (return response as string instead of outputting)
-        // CURLOPT_POST             = 47 (use POST method)
-        // CURLOPT_HTTPHEADER       = 10023 (set HTTP headers)
-        // CURLOPT_POSTFIELDS       = 10015 (set POST data)
+        // CURLOPT_RETURNTRANSFER    = 19913 (return response as string instead of outputting)
+        // CURLOPT_POST            = 47 (use POST method)
+        // CURLOPT_HTTPHEADER        = 10023 (set HTTP headers)
+        // CURLOPT_POSTFIELDS        = 10015 (set POST data)
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -57,13 +57,30 @@ class FeedbackGenerator
             throw new \RuntimeException('Ollama API error: ' . $error);
         }
 
-        // CURLINFO_HTTP_CODE       = 2097154 (get HTTP status code)
+        // Get the HTTP status code
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
+        // 💥 Robust Error Handling: Check HTTP code and extract error message from body
         if ($httpCode !== 200) {
-            throw new \RuntimeException('Ollama API returned HTTP ' . $httpCode);
+            $errorMessage = 'Unknown API error.';
+
+            if ($jsonResponse) {
+                $data = json_decode($jsonResponse, true);
+
+                // Ollama errors typically have an 'error' key in the JSON response
+                if (isset($data['error'])) {
+                    $errorMessage = $data['error'];
+                } else {
+                    // Fallback to the raw body if it's not JSON or doesn't have the 'error' key
+                    $errorMessage = "Raw response: " . $jsonResponse;
+                }
+            }
+
+            // Throw a rich exception including the HTTP code and the extracted message
+            throw new \RuntimeException("Ollama API call failed. HTTP {$httpCode}: {$errorMessage}");
         }
+        // 💥 End Robust Error Handling
 
         // 3. Parse response using parseOllamaResponse()
         $verdict = $this->parseOllamaResponse($jsonResponse, $isCorrect);
