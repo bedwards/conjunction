@@ -2,6 +2,7 @@
 <psalm errorLevel="8">
 
     <projectFiles>
+        <directory name="public" />
         <directory name="src" />
         <directory name="tests" />
         <ignoreFiles>
@@ -15,10 +16,5 @@
                 <directory name="tests/" />
             </errorLevel>
         </UnusedClass>
-        <PossiblyUnusedMethod>
-            <errorLevel type="suppress">
-                <file name="src/Repository/SentencePairRepositoryInterface.php"/>
-            </errorLevel>
-        </PossiblyUnusedMethod>
     </issueHandlers>
 </psalm>

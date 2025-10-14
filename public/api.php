@@ -1,7 +1,11 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
 use Conjunction\Entity\Conjunction;
+use Conjunction\Repository\GameSessionRepositoryInterface;
+use Conjunction\Repository\SentencePairRepositoryInterface;
+use Conjunction\Service\ConjunctionChecker;
 
 header('Content-Type: application/json');
 $container = require __DIR__ . '/../config/container.php';
@@ -9,7 +13,7 @@ $action = $_GET['action'] ?? '';
 
 function createSession($container): array  // Change: add param, return array
 {
-    $sessionRepo = $container->get(\Conjunction\Repository\GameSessionRepositoryInterface::class);
+    $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
     $session = $sessionRepo->create('');
     return ['session_token' => $session->getSessionToken()];
 }
@@ -17,8 +21,8 @@ function createSession($container): array  // Change: add param, return array
 function getRandomPair($container): array  // Change: add param, return array
 {
     $token = $_GET['token'] ?? throw new \Exception('Missing token');
-    $pairRepo = $container->get(\Conjunction\Repository\SentencePairRepositoryInterface::class);
-    $sessionRepo = $container->get(\Conjunction\Repository\GameSessionRepositoryInterface::class);
+    $pairRepo = $container->get(SentencePairRepositoryInterface::class);
+    $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
 
     $session = $sessionRepo->findByToken($token);
     $pair = $pairRepo->findRandomByDifficulty(1);
@@ -40,10 +44,10 @@ function getRandomPair($container): array  // Change: add param, return array
 function check($container): array  // Change: add param, return array
 {
     $input = json_decode(file_get_contents('php://input'), true);
-    $pairRepo = $container->get(\Conjunction\Repository\SentencePairRepositoryInterface::class);
+    $pairRepo = $container->get(SentencePairRepositoryInterface::class);
 
     $pair = $pairRepo->find($input['pair_id']);
-    $checker = $container->get(\Conjunction\Service\ConjunctionChecker::class);
+    $checker = $container->get(ConjunctionChecker::class);
 
     $verdict = $checker->check(
         $pair,

@@ -1,6 +1,7 @@
 <?php
 
 use DI\ContainerBuilder;
+use Conjunction\Entity\SentencePair;
 use Conjunction\Repository\SentencePairRepositoryInterface;
 use Conjunction\Repository\SentencePairRepository;
 use Conjunction\Repository\GameSessionRepositoryInterface;
@@ -48,14 +49,14 @@ $containerBuilder->addDefinitions([
 
     // Repository interfaces bound to implementations
     // DIP: High-level code depends on interfaces
-    SentencePairRepositoryInterface::class => function (EntityManager $em) {
-        return $em->getRepository(\Conjunction\Entity\SentencePair::class);
+    SentencePairRepositoryInterface::class => function (EntityManager $em): SentencePairRepositoryInterface {
+        return $em->getRepository(SentencePair::class);
     },
 
     GameSessionRepositoryInterface::class => DI\autowire(GameSessionRepository::class),
 
     // Services with dependency injection
-    FeedbackGenerator::class => function () {
+    FeedbackGenerator::class => function (): FeedbackGenerator {
         return new FeedbackGenerator(
             $_ENV['OLLAMA_HOST'] ?? 'http://localhost:11434',
             $_ENV['OLLAMA_MODEL'] ?? 'llama3.3:70b'

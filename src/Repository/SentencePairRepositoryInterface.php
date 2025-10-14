@@ -14,11 +14,13 @@ interface SentencePairRepositoryInterface
 {
     /**
      * Get a random sentence pair by difficulty level
+     * @psalm-suppress PossiblyUnusedMethod
      */
     public function findRandomByDifficulty(int $difficulty): ?SentencePair;
 
     /**
      * Find by ID
+     * @psalm-suppress PossiblyUnusedMethod
      */
     public function find(int $id): ?SentencePair;
 }
