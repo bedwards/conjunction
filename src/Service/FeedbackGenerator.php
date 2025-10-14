@@ -19,6 +19,7 @@ class FeedbackGenerator
         private string $ollamaHost,
         private string $ollamaModel
     ) {
+        error_log("INFO: FeedbackGenerator initialized with model: {$this->ollamaModel}");
     }
 
     /**
@@ -113,6 +114,10 @@ Result: {$status}
 Give a brief, encouraging explanation (1-2 sentences) suitable for kids.
 - If CORRECT: Praise them and explain why it works
 - If WRONG: Gently correct and explain the difference
+
+Do not offer multiple possible responses, instead offer exactly one.
+Do not include meta-commentary or instructions for the human teacher. Only print
+the literal text you want the student to see.
 
 Response:
 PROMPT;
