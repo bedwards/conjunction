@@ -18,13 +18,9 @@ use Conjunction\Strategy\RuleInterface;
  */
 final class ConjunctionChecker
 {
-    /**
-     * @param RuleInterface[] $rules
-     */
     public function __construct(
         private FeedbackGenerator $feedbackGenerator,
-        private GameSessionRepositoryInterface $sessionRepository,
-        private array $rules
+        private GameSessionRepositoryInterface $sessionRepository
     ) {
     }
 
@@ -48,19 +44,5 @@ final class ConjunctionChecker
             $responseTimeMs
         );
         return $verdict;
-    }
-
-    /**
-     * Find the rule for a given conjunction
-     * SRP: Isolated rule lookup logic
-     */
-    private function findRule(Conjunction $conjunction): ?RuleInterface
-    {
-        foreach ($this->rules as $rule) {
-            if ($conjunction == $rule->getConjunction()) {
-                return $rule;
-            }
-        }
-        return null;
     }
 }

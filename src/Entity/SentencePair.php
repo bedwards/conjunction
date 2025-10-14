@@ -3,6 +3,7 @@
 namespace Conjunction\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Conjunction\Repository\SentencePairRepository;
 
 /**
  * Doctrine Entity for sentence pairs
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * - SRP: Only represents a sentence pair domain model
  * - OCP: Can extend with new properties without modifying existing code
  */
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SentencePairRepository::class)]
 #[ORM\Table(name: 'sentence_pairs')]
 class SentencePair
 {

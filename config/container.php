@@ -62,19 +62,7 @@ $containerBuilder->addDefinitions([
         );
     },
 
-    SessionManager::class => DI\autowire(SessionManager::class),
-
-    // ConjunctionChecker with strategy pattern rules
-    'rule.and' => fn () => new Rule(Conjunction::AND),
-    'rule.but' => fn () => new Rule(Conjunction::BUT),
-    'rule.so' => fn () => new Rule(Conjunction::SO),
-
-    ConjunctionChecker::class => DI\autowire()
-        ->constructorParameter('rules', [
-            DI\get('rule.and'),
-            DI\get('rule.but'),
-            DI\get('rule.so'),
-        ]),
+    ConjunctionChecker::class => DI\autowire(),
 ]);
 
 return $containerBuilder->build();

@@ -21,10 +21,4 @@ interface SentencePairRepositoryInterface
      * Find by ID
      */
     public function find(int $id): ?SentencePair;
-
-    /**
-     * Get all sentence pairs
-     * @return SentencePair[]
-     */
-    public function findAll(): array;
 }

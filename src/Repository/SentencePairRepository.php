@@ -18,23 +18,18 @@ class SentencePairRepository extends EntityRepository implements SentencePairRep
     #[\Override]
     public function findRandomByDifficulty(int $difficulty): ?SentencePair
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // using DQL
-        // SELECT random pair WHERE difficulty_level = :difficulty
-        // Use RAND() or similar
+        return $this->createQueryBuilder('sp')
+            ->where('sp.difficultyLevel = :difficulty')
+            ->setParameter('difficulty', $difficulty)
+            ->orderBy('RAND()')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     #[\Override]
     public function find($id): ?SentencePair
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // using parent::find()
-    }
-
-    #[\Override]
-    public function findAll(): array
-    {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // using parent::findAll()
+        return parent::find($id);
     }
 }
