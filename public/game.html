@@ -153,6 +153,15 @@
             font-size: 1.2em;
             color: #667eea;
         }
+
+        .stats span {
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .stats {
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -283,19 +292,21 @@
             }
         }
 
-        // Check answer
         async function checkAnswer(choice) {
             if (!currentPair || !sessionToken) {
-                // If token is missing here, force a re-init
                 await init();
                 return;
             }
 
             disableButtons();
-
             const responseTime = Date.now() - startTime;
 
             try {
+                // Show loading state
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.textContent = '🤔 Thinking...';
+                feedbackEl.className = 'feedback show';
+
                 const response = await fetch('/api.php?action=check', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -307,38 +318,95 @@
                     })
                 });
 
-                const data = await handleApiResponse(response); // Check for API errors
+                const data = await handleApiResponse(response);
 
-                // Update body background
+                // 🎨 RESTORE: Update body background for green/red effect
                 document.body.className = data.verdict.color_class;
 
+                // 🎯 NEW: Update counters immediately with animation
+                if (data.session) {
+                    animateCounter('accuracy', Math.round(data.session.accuracy), '%');
+                    animateCounter('questions', data.session.total_questions, '');
+                }
+
                 // Show feedback
-                const feedbackEl = document.getElementById('feedback');
                 feedbackEl.className = `feedback ${data.verdict.color_class} show`;
                 feedbackEl.textContent = data.verdict.explanation;
+
+                // Highlight selected button
+                document.getElementById(`btn-${choice}`).classList.add(
+                    data.verdict.is_correct ? 'correct' : 'wrong'
+                );
 
                 // Show next button
                 document.getElementById('next-btn').classList.add('show');
 
             } catch (error) {
                 const errorMessage = error.message;
-
-                // If the check fails due to session, loadNextQuestion will handle the full reset when called next.
                 const feedbackEl = document.getElementById('feedback');
                 feedbackEl.textContent = `ERROR: ${errorMessage}`;
                 feedbackEl.className = 'feedback verdict-wrong show';
                 document.body.className = 'verdict-wrong';
 
-                // Re-enable buttons if this was a check error, not a setup error,
-                // but only if it's not a fatal session issue.
                 if (!errorMessage.includes("Session not found") && !errorMessage.includes("token expired")) {
                     enableButtons();
                 } else {
-                    document.getElementById('next-btn').classList.add('show'); // Let the user click 'Next' to trigger session recovery
+                    document.getElementById('next-btn').classList.add('show');
                 }
             }
         }
 
+        // Helper function to animate counter increments
+        function animateCounter(elementId, targetValue, suffix) {
+            const element = document.getElementById(elementId);
+            const label = elementId.charAt(0).toUpperCase() + elementId.slice(1);
+
+            // Extract current value
+            const currentText = element.textContent;
+            const currentValue = parseInt(currentText.match(/\d+/)?.[0] || '0');
+
+            // If values are the same, just update (no animation needed)
+            if (currentValue === targetValue) {
+                element.textContent = `${label}: ${targetValue}${suffix}`;
+                return;
+            }
+
+            // Animate from current to target
+            const duration = 500; // ms
+            const steps = 20;
+            const increment = (targetValue - currentValue) / steps;
+            const stepDuration = duration / steps;
+
+            let current = currentValue;
+            let step = 0;
+
+            const interval = setInterval(() => {
+                step++;
+                current += increment;
+
+                if (step >= steps) {
+                    current = targetValue;
+                    clearInterval(interval);
+                }
+
+                const displayValue = suffix === '%'
+                    ? Math.round(current)
+                    : Math.floor(current);
+
+                element.textContent = `${label}: ${displayValue}${suffix}`;
+
+                // Add a pulse effect on the final step
+                if (step >= steps) {
+                    element.style.transform = 'scale(1.1)';
+                    element.style.transition = 'transform 0.2s';
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1)';
+                    }, 200);
+                }
+            }, stepDuration);
+        }
+
+        // Helper functions
         function disableButtons() {
             ['btn-and', 'btn-but', 'btn-so'].forEach(id => {
                 document.getElementById(id).disabled = true;
@@ -347,7 +415,9 @@
 
         function enableButtons() {
             ['btn-and', 'btn-but', 'btn-so'].forEach(id => {
-                document.getElementById(id).disabled = false;
+                const btn = document.getElementById(id);
+                btn.disabled = false;
+                btn.classList.remove('correct', 'wrong');
             });
         }
 

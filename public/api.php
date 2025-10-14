@@ -53,10 +53,11 @@ function getRandomPair($container): array // Change: add param, return array
     ];
 }
 
-function check($container): array // Change: add param, return array
+function check($container): array
 {
     $input = json_decode(file_get_contents('php://input'), true);
     $pairRepo = $container->get(SentencePairRepositoryInterface::class);
+    $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
 
     // Check if pair_id exists to prevent potential undefined array key warning
     if (!isset($input['pair_id'])) {
@@ -84,7 +85,22 @@ function check($container): array // Change: add param, return array
         $input['response_time_ms']
     );
 
-    return ['verdict' => $verdict->toArray()];
+    // 🎯 NEW: Get updated session data after recording the answer
+    $session = $sessionRepo->findByToken($input['session_token']);
+
+    if ($session === null) {
+        throw new \Exception('Session not found after recording answer.');
+    }
+
+    // Return BOTH verdict AND updated session stats
+    return [
+        'verdict' => $verdict->toArray(),
+        'session' => [
+            'total_questions' => $session->getTotalQuestions(),
+            'correct_answers' => $session->getCorrectAnswers(),
+            'accuracy' => round($session->getAccuracy() * 100, 2),
+        ],
+    ];
 }
 
 try {
