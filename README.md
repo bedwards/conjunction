@@ -1,22 +1,3 @@
----
-title: Conjunction Junction
-emoji: 🚂
-colorFrom: blue
-colorTo: purple
-sdk: docker
-app_port: 7860
-hardware: gpu-t4-small
-pinned: false
-license: apache-2.0
-tags:
-  - education
-  - llm
-  - php
-  - ollama
-  - game
-short_description: Educational grammar game with real-time LLM feedback (PHP + Ollama + Llama 3.2)
----
-
 # 🚂 Conjunction Junction
 
 
