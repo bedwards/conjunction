@@ -7,7 +7,7 @@
 
 An educational web game that teaches kids (ages 7-10) proper conjunction usage through interactive sentence completion with **real-time LLM feedback**.
 
-<video src="https://github.com/user-attachments/assets/57f1960e-8104-4814-9287-697a67647763" width="600" controls></video>
+<video src="https://github.com/user-attachments/assets/2dbe20fd-78e0-4dd8-8c3b-3f5aad04f0d3" width="600" controls></video>
 
 ## Run it
 
