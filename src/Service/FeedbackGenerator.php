@@ -111,13 +111,33 @@ Correct answer: {$correctAnswer}
 Student chose: {$userChoiceValue}
 Result: {$status}
 
-Give a brief, encouraging explanation (1-2 sentences) suitable for kids.
+Give a brief, encouraging explanation (3 sentences) suitable for kids.
 - If CORRECT: Praise them and explain why it works
 - If WRONG: Gently correct and explain the difference
+
+CORRECT means that Correct answer: {$correctAnswer} matches what the Student chose: {$userChoiceValue}
+CORRECT means that Result: {$status} is the literal string CORRECT
+WRONG means that Result: {$status} is the literal string WRONG
+
+You do not determine if the Sentence and Student chose is correct.
+Correctness is determine by Result being the literal string "CORRECT"
+In this case Result is {$status}
+
+Do not put two conjunctions back-to-back in your response.
+For example, never include the literal string "but so" in your response.
+
+Do not put a blank (e.g. "_______") in your response.
 
 Do not offer multiple possible responses, instead offer exactly one.
 Do not include meta-commentary or instructions for the human teacher. Only print
 the literal text you want the student to see.
+
+Be very brief. RESPOND WITH ONLY THREE SENTENCES.
+Do not put quotes around your response.
+Do not include HTML tags. RESPOND WITH PLAIN TEXT ONLY.
+DO NOT REPEAT the Sentence given by the student in your response.
+NEVER put all caps "WRONG" in your response.
+Do not start your response with "Wrong".
 
 Response:
 PROMPT;
@@ -142,9 +162,29 @@ PROMPT;
         }
 
         $explanation = trim($data['response']);
+        $explanation = trim($explanation, '"');
+        $explanation = trim($explanation);
 
         if (empty($explanation)) {
             throw new \RuntimeException('Ollama returned empty response');
+        }
+
+        preg_match_all('/[.!?]/', $explanation, $matches, PREG_OFFSET_CAPTURE);
+
+        // allow up to three sentences
+        if (isset($matches[0][2])) {
+            $puncPos = $matches[0][2][1];  // third punctuation position
+        } elseif (isset($matches[0][1])) {
+            $puncPos = $matches[0][1][1]; // second punctuation position
+        } elseif (isset($matches[0][0])) {
+            $puncPos = $matches[0][0][1]; // first punctuation position
+        } else {
+            $puncPos = null;
+        }
+
+        if ($puncPos !== null) {
+            $explanation = substr($explanation, 0, $puncPos + 1);
+            $explanation = trim($explanation);
         }
 
         $verdictType = $isCorrect ? VerdictType::CORRECT : VerdictType::WRONG;
