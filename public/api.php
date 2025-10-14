@@ -7,34 +7,41 @@ use Conjunction\Repository\GameSessionRepositoryInterface;
 use Conjunction\Repository\SentencePairRepositoryInterface;
 use Conjunction\Service\ConjunctionChecker;
 
-// FIX: Explicitly setting the charset to UTF-8 for JSON responses
 header('Content-Type: application/json; charset=utf-8');
 $container = require __DIR__ . '/../config/container.php';
 $action = $_GET['action'] ?? '';
 
-function createSession($container): array // Change: add param, return array
+function createSession($container): array
 {
     $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
     $session = $sessionRepo->create('');
     return ['session_token' => $session->getSessionToken()];
 }
 
-function getRandomPair($container): array // Change: add param, return array
+function getRandomPair($container): array
 {
     $token = $_GET['token'] ?? throw new \Exception('Missing token');
+
+    // Get difficulty from query parameter, default to 1 (easy)
+    $difficulty = isset($_GET['difficulty']) ? (int)$_GET['difficulty'] : 1;
+
+    // Validate difficulty range (1-3)
+    if ($difficulty < 1 || $difficulty > 3) {
+        $difficulty = 1;
+    }
+
     $pairRepo = $container->get(SentencePairRepositoryInterface::class);
     $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
 
     $session = $sessionRepo->findByToken($token);
 
-    // FIX: Check if the session was found before accessing its methods
     if ($session === null) {
         throw new \Exception('Session not found or token expired. Please create a new session.');
     }
 
-    $pair = $pairRepo->findRandomByDifficulty(1);
+    // Use the difficulty parameter instead of hardcoded 1
+    $pair = $pairRepo->findRandomByDifficulty($difficulty);
 
-    // FIX: Also check if a pair was found, though less likely given previous context.
     if ($pair === null) {
         throw new \Exception('No sentence pairs available at this difficulty level.');
     }
@@ -59,19 +66,16 @@ function check($container): array
     $pairRepo = $container->get(SentencePairRepositoryInterface::class);
     $sessionRepo = $container->get(GameSessionRepositoryInterface::class);
 
-    // Check if pair_id exists to prevent potential undefined array key warning
     if (!isset($input['pair_id'])) {
         throw new \Exception('Missing pair ID for check action.');
     }
 
     $pair = $pairRepo->find($input['pair_id']);
 
-    // Check if the pair was found
     if ($pair === null) {
         throw new \Exception('Sentence pair not found.');
     }
 
-    // Check if necessary inputs are present
     if (!isset($input['choice'], $input['session_token'], $input['response_time_ms'])) {
         throw new \Exception('Missing required check parameters.');
     }
@@ -85,14 +89,12 @@ function check($container): array
         $input['response_time_ms']
     );
 
-    // 🎯 NEW: Get updated session data after recording the answer
     $session = $sessionRepo->findByToken($input['session_token']);
 
     if ($session === null) {
         throw new \Exception('Session not found after recording answer.');
     }
 
-    // Return BOTH verdict AND updated session stats
     return [
         'verdict' => $verdict->toArray(),
         'session' => [
@@ -106,13 +108,13 @@ function check($container): array
 try {
     switch ($action) {
         case 'create_session':
-            $resp = createSession($container); // Change: pass $container
+            $resp = createSession($container);
             break;
         case 'next':
-            $resp = getRandomPair($container); // Change: pass $container
+            $resp = getRandomPair($container);
             break;
         case 'check':
-            $resp = check($container); // Change: pass $container
+            $resp = check($container);
             break;
         default:
             throw new \Exception('Invalid action');
