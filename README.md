@@ -27,16 +27,18 @@ short_description: Educational grammar game with real-time LLM feedback (PHP + O
 
 An educational web game that teaches kids (ages 7-10) proper conjunction usage through interactive sentence completion with **real-time LLM feedback**.
 
+<video src="https://github.com/user-attachments/assets/57f1960e-8104-4814-9287-697a67647763" width="600" controls></video>
+
+## Run it
+
+Set up ollama, and pull down `phi3:mini`
+
 ```bash
 ./setup.sh
 docker-compose up -d
 ./dev-simple.sh
 open http://localhost:1729/game.html
 ```
-
-![screenshot](screenshot.png)
-
-<video src="https://github.com/user-attachments/assets/57f1960e-8104-4814-9287-697a67647763" width="600" controls></video>
 
 ## Tech Stack
 
