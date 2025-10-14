@@ -99,49 +99,59 @@ class FeedbackGenerator
         Conjunction $userChoice,
         bool $isCorrect
     ): string {
-        $correctAnswer = $pair->getCorrectAnswer()->value;
-        $userChoiceValue = $userChoice->value;
-        $status = $isCorrect ? "CORRECT" : "WRONG";
 
-        $prompt = <<<PROMPT
+        $promptHeader = <<<PROMPT_HEADER
 You are a friendly teacher helping kids (ages 7-10) learn conjunctions (and, but, so).
 
-Sentence: "{$pair->getFirstPart()}" ___ "{$pair->getSecondPart()}"
-Correct answer: {$correctAnswer}
-Student chose: {$userChoiceValue}
-Result: {$status}
-
 Give a brief, encouraging explanation (3 sentences) suitable for kids.
-- If CORRECT: Praise them and explain why it works
-- If WRONG: Gently correct and explain the difference
-
-CORRECT means that Correct answer: {$correctAnswer} matches what the Student chose: {$userChoiceValue}
-CORRECT means that Result: {$status} is the literal string CORRECT
-WRONG means that Result: {$status} is the literal string WRONG
-
-You do not determine if the Sentence and Student chose is correct.
-Correctness is determine by Result being the literal string "CORRECT"
-In this case Result is {$status}
 
 Do not put two conjunctions back-to-back in your response.
 For example, never include the literal string "but so" in your response.
 
-Do not put a blank (e.g. "_______") in your response.
+Do not put a blank line (e.g. "_______") in your response.
 
 Do not offer multiple possible responses, instead offer exactly one.
-Do not include meta-commentary or instructions for the human teacher. Only print
-the literal text you want the student to see.
+
+Do not include meta-commentary or instructions for the human teacher.
+Only print the literal text you want the student to see.
 
 Be very brief. RESPOND WITH ONLY THREE SENTENCES.
+
 Do not put quotes around your response.
-Do not include HTML tags. RESPOND WITH PLAIN TEXT ONLY.
+
+Do not include HTML tags.
+RESPOND WITH PLAIN TEXT ONLY.
+
 DO NOT REPEAT the Sentence given by the student in your response.
+
 NEVER put all caps "WRONG" in your response.
 Do not start your response with "Wrong".
 
-Response:
-PROMPT;
+The correct sentence is:
+{$pair->getFirstPart()}, {$pair->getCorrectAnswer()->value} {$pair->getSecondPart()}.
 
+PROMPT_HEADER;
+
+        $promptCorrect = <<<PROMPT_CORRECT
+The student correctly answered.
+Praise them and explain why it works.
+
+PROMPT_CORRECT;
+
+        $promptWrong = <<<PROMPT_WRONG
+The student answered incorrectly, choosing "{$userChoice->value}"
+Gently correct and explain the difference.
+
+PROMPT_WRONG;
+
+        $promptFooter = <<<PROMPT_FOOTER
+Response:
+
+PROMPT_FOOTER;
+
+        $promptBody = $isCorrect ? $promptCorrect : $promptWrong;
+        $prompt = $promptHeader . $promptBody . $promptFooter;
+        error_log($prompt);
         return $prompt;
     }
 
