@@ -36,6 +36,8 @@ open http://localhost:1729/game.html
 
 ![screenshot](screenshot.png)
 
+<video src="https://github.com/user-attachments/assets/57f1960e-8104-4814-9287-697a67647763" width="600" controls></video>
+
 ## Tech Stack
 
 - **PHP 8.1+** with enums, attributes, constructor property promotion
