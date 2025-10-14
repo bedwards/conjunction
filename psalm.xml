@@ -27,20 +27,6 @@
             </errorLevel>
         </UnusedClass>
 
-        <UnusedProperty>
-            <errorLevel type="suppress">
-                <file name="src/Service/FeedbackGenerator.php"/>
-                <file name="src/Service/ConjunctionChecker.php"/>
-                <file name="src/Repository/SentencePairRepositoryInterface.php"/>
-                <file name="src/Repository/SentencePairRepository.php"/>
-                <file name="src/Repository/GameSessionRepositoryInterface.php"/>
-                <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Entity/Verdict.php"/>
-                <file name="src/Entity/SentencePair.php"/>
-                <file name="src/Entity/GameSession.php"/>
-            </errorLevel>
-        </UnusedProperty>
-
         <UnusedMethod>
             <errorLevel type="suppress">
                 <file name="src/Service/FeedbackGenerator.php"/>
@@ -68,20 +54,6 @@
                 <file name="src/Entity/GameSession.php"/>
             </errorLevel>
         </PossiblyUnusedMethod>
-
-        <UnusedParam>
-            <errorLevel type="suppress">
-                <file name="src/Service/FeedbackGenerator.php"/>
-                <file name="src/Service/ConjunctionChecker.php"/>
-                <file name="src/Repository/SentencePairRepositoryInterface.php"/>
-                <file name="src/Repository/SentencePairRepository.php"/>
-                <file name="src/Repository/GameSessionRepositoryInterface.php"/>
-                <file name="src/Repository/GameSessionRepository.php"/>
-                <file name="src/Entity/Verdict.php"/>
-                <file name="src/Entity/SentencePair.php"/>
-                <file name="src/Entity/GameSession.php"/>
-            </errorLevel>
-        </UnusedParam>
 
     </issueHandlers>
 

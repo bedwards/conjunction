@@ -56,7 +56,11 @@ final class ConjunctionChecker
      */
     private function findRule(Conjunction $conjunction): ?RuleInterface
     {
-        throw new \BadMethodCallException("Method " . __METHOD__ . " is not yet implemented.");
-        // Find matching rule from $this->rules array
+        foreach ($this->rules as $rule) {
+            if ($conjunction == $rule->getConjunction()) {
+                return $rule;
+            }
+        }
+        return null;
     }
 }
