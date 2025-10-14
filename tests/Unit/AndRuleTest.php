@@ -17,9 +17,6 @@ class AndRuleTest extends TestCase
         $this->rule = new Rule(Conjunction::AND);
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsTrueWhenCorrect(): void
     {
         $result = $this->rule->applies(Conjunction::AND);
@@ -27,9 +24,6 @@ class AndRuleTest extends TestCase
         $this->assertTrue($result, 'Should return true when choice matches correct answer');
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsFalseWhenIncorrect(): void
     {
         $result = $this->rule->applies(Conjunction::SO);
@@ -37,9 +31,6 @@ class AndRuleTest extends TestCase
         $this->assertFalse($result, 'Should return false when choice does not match');
     }
 
-    /**
-     * @group work
-     */
     public function testGetExplanationReturnsString(): void
     {
         $explanation = $this->rule->getExplanation();
@@ -49,9 +40,6 @@ class AndRuleTest extends TestCase
         $this->assertStringContainsString('and', strtolower($explanation));
     }
 
-    /**
-     * @group work
-     */
     public function testGetConjunctionReturnsAnd(): void
     {
         $this->assertEquals(Conjunction::AND, $this->rule->getConjunction());

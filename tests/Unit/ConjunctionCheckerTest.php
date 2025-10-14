@@ -48,9 +48,6 @@ class ConjunctionCheckerTest extends TestCase
         $idProperty->setValue($pair, self::$pairId);
     }
 
-    /**
-     * @group work
-     */
     public function testCorrectAnswerReturnsCorrectVerdict(): void
     {
         $pair = new SentencePair(
@@ -93,9 +90,6 @@ class ConjunctionCheckerTest extends TestCase
         $this->assertEquals(VerdictType::CORRECT, $result->getType());
     }
 
-    /**
-     * @group work
-     */
     public function testWrongAnswerReturnsWrongVerdict(): void
     {
         $pair = new SentencePair(
@@ -139,9 +133,6 @@ class ConjunctionCheckerTest extends TestCase
         $this->assertEquals(VerdictType::WRONG, $result->getType());
     }
 
-    /**
-     * @group work
-     */
     public function testSessionIsUpdatedAfterCheck(): void
     {
         $pair = new SentencePair(

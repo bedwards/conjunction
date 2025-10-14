@@ -17,8 +17,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests that verify ConjunctionChecker actually uses its injected rules
- * 
- * NOTE: Currently the $rules property is unused! 
+ *
+ * NOTE: Currently the $rules property is unused!
  * The findRule() method needs to be implemented and called.
  */
 class ConjunctionCheckerRulesTest extends TestCase
@@ -49,7 +49,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that findRule() can find the AND rule
-     * @group work
      */
     public function testFindRuleReturnsAndRule(): void
     {
@@ -65,7 +64,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that findRule() can find the BUT rule
-     * @group work
      */
     public function testFindRuleReturnsButRule(): void
     {
@@ -80,7 +78,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that findRule() can find the SO rule
-     * @group work
      */
     public function testFindRuleReturnsSoRule(): void
     {
@@ -95,7 +92,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that findRule() returns null for non-existent rule
-     * @group work
      */
     public function testFindRuleReturnsNullForMissingRule(): void
     {
@@ -116,7 +112,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that checker works with custom rule implementations
-     * @group work
      */
     public function testCheckerWorksWithCustomRules(): void
     {
@@ -142,7 +137,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that rules array is used (not the parameter)
-     * @group work
      */
     public function testFindRuleUsesInjectedRulesArray(): void
     {
@@ -175,7 +169,6 @@ class ConjunctionCheckerRulesTest extends TestCase
 
     /**
      * Test that findRule handles rules in any order
-     * @group work
      */
     public function testFindRuleWorksRegardlessOfRuleOrder(): void
     {

@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class VerdictTest extends TestCase
 {
-    /**
-     * @group work
-     */
     public function testIsCorrectReturnsTrueForCorrectVerdict(): void
     {
         $verdict = new Verdict(VerdictType::CORRECT, 'Great job!');
@@ -18,9 +15,6 @@ class VerdictTest extends TestCase
         $this->assertTrue($verdict->isCorrect());
     }
 
-    /**
-     * @group work
-     */
     public function testIsCorrectReturnsFalseForWrongVerdict(): void
     {
         $verdict = new Verdict(VerdictType::WRONG, 'Not quite.');
@@ -28,9 +22,6 @@ class VerdictTest extends TestCase
         $this->assertFalse($verdict->isCorrect());
     }
 
-    /**
-     * @group work
-     */
     public function testIsCorrectReturnsFalseForOkayVerdict(): void
     {
         $verdict = new Verdict(VerdictType::OKAY, 'That works too.');
@@ -38,9 +29,6 @@ class VerdictTest extends TestCase
         $this->assertFalse($verdict->isCorrect());
     }
 
-    /**
-     * @group work
-     */
     public function testGetColorClassReturnsCorrectClassForCorrect(): void
     {
         $verdict = new Verdict(VerdictType::CORRECT, 'Great!');
@@ -48,9 +36,6 @@ class VerdictTest extends TestCase
         $this->assertEquals('verdict-correct', $verdict->getColorClass());
     }
 
-    /**
-     * @group work
-     */
     public function testGetColorClassReturnsWrongClassForWrong(): void
     {
         $verdict = new Verdict(VerdictType::WRONG, 'Nope.');
@@ -58,9 +43,6 @@ class VerdictTest extends TestCase
         $this->assertEquals('verdict-wrong', $verdict->getColorClass());
     }
 
-    /**
-     * @group work
-     */
     public function testGetColorClassReturnsOkayClassForOkay(): void
     {
         $verdict = new Verdict(VerdictType::OKAY, 'Close.');
@@ -68,9 +50,6 @@ class VerdictTest extends TestCase
         $this->assertEquals('verdict-okay', $verdict->getColorClass());
     }
 
-    /**
-     * @group work
-     */
     public function testToArrayIncludesAllFields(): void
     {
         $verdict = new Verdict(VerdictType::CORRECT, 'Excellent work!');
@@ -84,9 +63,6 @@ class VerdictTest extends TestCase
         $this->assertArrayHasKey('is_correct', $array);
     }
 
-    /**
-     * @group work
-     */
     public function testToArrayHasCorrectValuesForCorrectVerdict(): void
     {
         $verdict = new Verdict(VerdictType::CORRECT, 'Nice!');
@@ -99,9 +75,6 @@ class VerdictTest extends TestCase
         $this->assertTrue($array['is_correct']);
     }
 
-    /**
-     * @group work
-     */
     public function testToArrayHasCorrectValuesForWrongVerdict(): void
     {
         $verdict = new Verdict(VerdictType::WRONG, 'Try again.');

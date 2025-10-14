@@ -13,9 +13,6 @@ use PHPUnit\Framework\TestCase;
  */
 class SentencePairExtendedTest extends TestCase
 {
-    /**
-     * @group work
-     */
     public function testCreatedAtIsSetOnConstruction(): void
     {
         $before = new \DateTime();
@@ -34,9 +31,6 @@ class SentencePairExtendedTest extends TestCase
         $this->assertLessThanOrEqual($after->getTimestamp(), $createdAt->getTimestamp());
     }
 
-    /**
-     * @group work
-     */
     public function testCreatedAtPersistsAcrossMethodCalls(): void
     {
         $pair = new SentencePair(
@@ -57,9 +51,6 @@ class SentencePairExtendedTest extends TestCase
         );
     }
 
-    /**
-     * @group work
-     */
     public function testCreatedAtIsFormattable(): void
     {
         $pair = new SentencePair(
@@ -80,7 +71,6 @@ class SentencePairExtendedTest extends TestCase
 
     /**
      * Test that createdAt can be used for sorting pairs by creation time
-     * @group work
      */
     public function testMultiplePairsHaveDistinctCreatedAtTimes(): void
     {

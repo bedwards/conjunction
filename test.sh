@@ -2,5 +2,4 @@
 
 set -eux
 
-# --group work
 ./vendor/bin/phpunit --colors=always --testdox "$@"

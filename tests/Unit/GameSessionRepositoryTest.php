@@ -20,9 +20,6 @@ class GameSessionRepositoryTest extends TestCase
         $this->repository = new GameSessionRepository($this->mockPdo);
     }
 
-    /**
-     * @group work
-     */
     public function testFindByTokenReturnsSessionWhenFound(): void
     {
         $mockStmt = $this->createMock(PDOStatement::class);
@@ -60,9 +57,6 @@ class GameSessionRepositoryTest extends TestCase
         $this->assertEquals(3, $session->getCorrectAnswers());
     }
 
-    /**
-     * @group work
-     */
     public function testFindByTokenReturnsNullWhenNotFound(): void
     {
         $mockStmt = $this->createMock(PDOStatement::class);
@@ -87,9 +81,6 @@ class GameSessionRepositoryTest extends TestCase
         $this->assertNull($session);
     }
 
-    /**
-     * @group work
-     */
     public function testRecordAnswerUpdatesSessionStats(): void
     {
         $mockInsertStmt = $this->createMock(PDOStatement::class);
@@ -117,9 +108,6 @@ class GameSessionRepositoryTest extends TestCase
         $this->repository->recordAnswer(1, 42, 'so', true, 1500);
     }
 
-    /**
-     * @group work
-     */
     public function testCreateReturnsSessionWithId(): void
     {
         // This test verifies the existing create() method works correctly

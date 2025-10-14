@@ -17,9 +17,6 @@ class SoRuleTest extends TestCase
         $this->rule = new Rule(Conjunction::SO);
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsTrueWhenCorrect(): void
     {
         $result = $this->rule->applies(Conjunction::SO);
@@ -27,9 +24,6 @@ class SoRuleTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsFalseWhenIncorrect(): void
     {
         $result = $this->rule->applies(Conjunction::BUT);
@@ -37,9 +31,6 @@ class SoRuleTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @group work
-     */
     public function testGetExplanationReturnsString(): void
     {
         $explanation = $this->rule->getExplanation();
@@ -49,9 +40,6 @@ class SoRuleTest extends TestCase
         $this->assertStringContainsString('so', strtolower($explanation));
     }
 
-    /**
-     * @group work
-     */
     public function testGetConjunctionTypeReturnsSo(): void
     {
         $this->assertEquals(Conjunction::SO, $this->rule->getConjunction());

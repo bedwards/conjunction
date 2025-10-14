@@ -17,9 +17,6 @@ class ButRuleTest extends TestCase
         $this->rule = new Rule(Conjunction::BUT);
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsTrueWhenCorrect(): void
     {
         $result = $this->rule->applies(Conjunction::BUT);
@@ -27,9 +24,6 @@ class ButRuleTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @group work
-     */
     public function testAppliesReturnsFalseWhenIncorrect(): void
     {
         $result = $this->rule->applies(Conjunction::SO);
@@ -37,9 +31,6 @@ class ButRuleTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @group work
-     */
     public function testGetExplanationReturnsString(): void
     {
         $explanation = $this->rule->getExplanation();
@@ -49,9 +40,6 @@ class ButRuleTest extends TestCase
         $this->assertStringContainsString('but', strtolower($explanation));
     }
 
-    /**
-     * @group work
-     */
     public function testGetConjunctionReturnsBut(): void
     {
         $this->assertEquals(Conjunction::BUT, $this->rule->getConjunction());

@@ -21,9 +21,6 @@ class SentencePairTest extends TestCase
         );
     }
 
-    /**
-     * @group work
-     */
     public function testIsCorrectChoiceReturnsTrue(): void
     {
         $result = $this->pair->isCorrectChoice(Conjunction::SO);
@@ -31,9 +28,6 @@ class SentencePairTest extends TestCase
         $this->assertTrue($result, 'Should return true for correct conjunction');
     }
 
-    /**
-     * @group work
-     */
     public function testIsCorrectChoiceReturnsFalse(): void
     {
         $result = $this->pair->isCorrectChoice(Conjunction::AND);
@@ -41,9 +35,6 @@ class SentencePairTest extends TestCase
         $this->assertFalse($result, 'Should return false for incorrect conjunction');
     }
 
-    /**
-     * @group work
-     */
     public function testGetFullSentenceFormatsCorrectly(): void
     {
         $result = $this->pair->getFullSentence(Conjunction::SO);
@@ -53,9 +44,6 @@ class SentencePairTest extends TestCase
         $this->assertStringContainsString('I went to bed', $result);
     }
 
-    /**
-     * @group work
-     */
     public function testGettersReturnCorrectValues(): void
     {
         $this->assertEquals('I was tired', $this->pair->getFirstPart());

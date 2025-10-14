@@ -14,9 +14,6 @@ use PHPUnit\Framework\TestCase;
  */
 class SentencePairRepositoryTest extends TestCase
 {
-    /**
-     * @group work
-     */
     public function testFindRandomByDifficultyReturnsNullWhenNoPairsExist(): void
     {
         // We can't easily mock Doctrine here without complex setup
@@ -27,9 +24,6 @@ class SentencePairRepositoryTest extends TestCase
         // $repo->findRandomByDifficulty(1) should return null if no pairs exist
     }
 
-    /**
-     * @group work
-     */
     public function testFindRandomByDifficultyReturnsPairWhenExists(): void
     {
         // This test verifies that findRandomByDifficulty returns a SentencePair
@@ -38,9 +32,6 @@ class SentencePairRepositoryTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * @group work
-     */
     public function testFindReturnsCorrectPairById(): void
     {
         // This test verifies find() delegates to parent::find()
@@ -48,17 +39,11 @@ class SentencePairRepositoryTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * @group work
-     */
     public function testFindReturnsNullForInvalidId(): void
     {
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * @group work
-     */
     public function testFindAllReturnsArrayOfPairs(): void
     {
         // This test verifies findAll() delegates to parent::findAll()
@@ -66,9 +51,6 @@ class SentencePairRepositoryTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * @group work
-     */
     public function testFindAllReturnsEmptyArrayWhenNoPairs(): void
     {
         $this->expectNotToPerformAssertions();
@@ -76,7 +58,6 @@ class SentencePairRepositoryTest extends TestCase
 
     /**
      * Behavioral test: Verify pairs are filtered by difficulty correctly
-     * @group work
      */
     public function testFindRandomByDifficultyFiltersCorrectly(): void
     {
@@ -86,7 +67,6 @@ class SentencePairRepositoryTest extends TestCase
 
     /**
      * Behavioral test: Verify randomization works
-     * @group work
      */
     public function testFindRandomByDifficultyReturnsRandomPair(): void
     {

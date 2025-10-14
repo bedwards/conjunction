@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class GameSessionTest extends TestCase
 {
-    /**
-     * @group work
-     */
     public function testRecordAnswerIncrementsQuestionsWhenCorrect(): void
     {
         $session = new GameSession(1, 'token123', 0, 0);
@@ -20,9 +17,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(1, $session->getCorrectAnswers());
     }
 
-    /**
-     * @group work
-     */
     public function testRecordAnswerIncrementsQuestionsWhenWrong(): void
     {
         $session = new GameSession(1, 'token123', 0, 0);
@@ -33,9 +27,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(0, $session->getCorrectAnswers());
     }
 
-    /**
-     * @group work
-     */
     public function testRecordAnswerTracksMultipleAnswers(): void
     {
         $session = new GameSession(1, 'token123', 0, 0);
@@ -48,9 +39,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(2, $session->getCorrectAnswers());
     }
 
-    /**
-     * @group work
-     */
     public function testGetAccuracyReturnsZeroForNoQuestions(): void
     {
         $session = new GameSession(1, 'token123', 0, 0);
@@ -58,9 +46,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(0.0, $session->getAccuracy());
     }
 
-    /**
-     * @group work
-     */
     public function testGetAccuracyReturnsCorrectPercentage(): void
     {
         $session = new GameSession(1, 'token123', 4, 3);
@@ -68,9 +53,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(0.75, $session->getAccuracy());
     }
 
-    /**
-     * @group work
-     */
     public function testGetAccuracyReturnsOneForPerfectScore(): void
     {
         $session = new GameSession(1, 'token123', 5, 5);
@@ -78,9 +60,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(1.0, $session->getAccuracy());
     }
 
-    /**
-     * @group work
-     */
     public function testGetAccuracyReturnsZeroForAllWrong(): void
     {
         $session = new GameSession(1, 'token123', 5, 0);
@@ -88,9 +67,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals(0.0, $session->getAccuracy());
     }
 
-    /**
-     * @group work
-     */
     public function testGetStartedAtReturnsDateTime(): void
     {
         $startedAt = new \DateTime('2024-01-01 12:00:00');
@@ -102,9 +78,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals('2024-01-01 12:00:00', $result->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * @group work
-     */
     public function testGetStartedAtDefaultsToNow(): void
     {
         $before = new \DateTime();
@@ -118,9 +91,6 @@ class GameSessionTest extends TestCase
         $this->assertLessThanOrEqual($after->getTimestamp(), $startedAt->getTimestamp());
     }
 
-    /**
-     * @group work
-     */
     public function testGetLastActivityReturnsDateTime(): void
     {
         $lastActivity = new \DateTime('2024-01-01 12:30:00');
@@ -132,9 +102,6 @@ class GameSessionTest extends TestCase
         $this->assertEquals('2024-01-01 12:30:00', $result->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * @group work
-     */
     public function testGetLastActivityDefaultsToNow(): void
     {
         $before = new \DateTime();
@@ -148,9 +115,6 @@ class GameSessionTest extends TestCase
         $this->assertLessThanOrEqual($after->getTimestamp(), $lastActivity->getTimestamp());
     }
 
-    /**
-     * @group work
-     */
     public function testAccuracyUpdatesAfterRecordingAnswers(): void
     {
         $session = new GameSession(1, 'token123', 0, 0);

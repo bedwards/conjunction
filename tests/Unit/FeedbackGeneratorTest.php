@@ -32,9 +32,6 @@ class FeedbackGeneratorTest extends TestCase
         ]);
     }
 
-    /**
-     * @group work
-     */
     public function testBuildPromptCreatesCorrectFormatForCorrectAnswer(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -59,9 +56,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('CORRECT', $prompt);
     }
 
-    /**
-     * @group work
-     */
     public function testBuildPromptCreatesCorrectFormatForWrongAnswer(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -83,9 +77,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('and', strtolower($prompt));
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseCreatesCorrectVerdict(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -104,9 +95,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('Great job', $verdict->getExplanation());
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseCreatesWrongVerdict(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -125,9 +113,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('Not quite', $verdict->getExplanation());
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseThrowsOnInvalidJson(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -143,9 +128,6 @@ class FeedbackGeneratorTest extends TestCase
         $method->invoke($generator, $invalidJson, true);
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseThrowsOnMissingResponseField(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -161,9 +143,6 @@ class FeedbackGeneratorTest extends TestCase
         $method->invoke($generator, $invalidResponse, true);
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseThrowsOnEmptyResponse(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -179,9 +158,6 @@ class FeedbackGeneratorTest extends TestCase
         $method->invoke($generator, $emptyResponse, true);
     }
 
-    /**
-     * @group work
-     */
     public function testParseOllamaResponseTrimsWhitespace(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -196,9 +172,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertEquals('Great job!', $verdict->getExplanation());
     }
 
-    /**
-     * @group work
-     */
     public function testBuildPromptIncludesAllNecessaryContext(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
@@ -222,9 +195,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('ages 7-10', strtolower($prompt));
     }
 
-    /**
-     * @group work
-     */
     public function testBuildPromptForDifferentConjunctions(): void
     {
         $generator = new FeedbackGenerator($this->ollamaHost, $this->ollamaModel);
