@@ -151,7 +151,6 @@ PROMPT_FOOTER;
 
         $promptBody = $isCorrect ? $promptCorrect : $promptWrong;
         $prompt = $promptHeader . $promptBody . $promptFooter;
-        error_log($prompt);
         return $prompt;
     }
 

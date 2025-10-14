@@ -2,7 +2,7 @@
 
 set -eux
 
-./test.sh "$@"
+./scripts/test.sh "$@"
 
 vendor/bin/phpstan
 vendor/bin/psalm

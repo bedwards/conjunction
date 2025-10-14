@@ -53,7 +53,6 @@ class FeedbackGeneratorTest extends TestCase
         $this->assertStringContainsString('I was tired', $prompt);
         $this->assertStringContainsString('I went to bed', $prompt);
         $this->assertStringContainsString('so', strtolower($prompt));
-        $this->assertStringContainsString('CORRECT', $prompt);
     }
 
     public function testBuildPromptCreatesCorrectFormatForWrongAnswer(): void

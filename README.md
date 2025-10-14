@@ -1,6 +1,5 @@
 # 🚂 Conjunction Junction
 
-
 [![Build Status](https://github.com/bedwards/conjunction/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/bedwards/conjunction/actions/workflows/check.yml?query=branch:main)
 [![codecov](https://codecov.io/gh/bedwards/conjunction/branch/main/graph/badge.svg)](https://codecov.io/gh/bedwards/conjunction)
 
@@ -15,9 +14,9 @@ An educational web game that teaches kids (ages 7-10) proper conjunction usage t
 Set up ollama, and pull down `phi3:mini`
 
 ```bash
-./setup.sh
+./scripts/setup.sh
 docker-compose up -d
-./dev-simple.sh
+./scripts/dev-simple.sh
 open http://localhost:1729/game.html
 ```
 
@@ -30,6 +29,42 @@ open http://localhost:1729/game.html
 - **MySQL 8.0** in Docker
 - **PHP-DI** for dependency injection
 - **PHPUnit** for testing
+
+## Project Structure
+
+```
+.
+├── src/              # Application source code
+├── tests/            # PHPUnit tests
+├── public/           # Web root (game.html, assets)
+├── config/           # DI container, Doctrine config
+├── database/         # SQL schema and seeds
+├── scripts/          # Development and utility scripts
+├── .github/          # GitHub Actions workflows
+├── composer.json     # PHP dependencies
+├── phpunit.xml       # PHPUnit configuration
+├── psalm.xml         # Static analysis config
+└── docker-compose.yml
+```
+
+## Development Scripts
+
+```bash
+# Setup project (first time)
+./scripts/setup.sh
+
+# Run tests
+./scripts/test.sh
+
+# Run all checks (tests + static analysis)
+./scripts/check.sh
+
+# Start development server
+./scripts/dev-simple.sh
+
+# Debug database connection
+php scripts/db.php
+```
 
 ## Architecture (The Real Goal Here)
 
